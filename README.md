@@ -17,14 +17,18 @@ MIT License
 
 ## Contributors
 * James Canning
+
     *[BitEdge](https://www.bitedge.co/)
     *[GitHub](https://github.com/bitedgeco)
 * Jeff Torres
+
     *[jeffrey.n.torres@gmail.com](mailto:jeffrey.n.torres@gmail.com)
     *[GitHub](https://github.com/ilikesounds)
 * Mike Harrison
+
     *[GitHub](https://github.com/)
 * Zach Rickert
+
     *[zachrickert@gmail.com](mailto:zachrickert@gmail.com)
     *[GitHub](https://github.com/zachrickert)
 
