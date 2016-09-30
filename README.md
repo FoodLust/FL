@@ -30,7 +30,7 @@ MIT License
 
 * Mike Harrison
 
-    *[GitHub](https://github.com/)
+    *[GitHub](https://github.com/mikekh84)
 
 * Zach Rickert
 
