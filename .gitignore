@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# User added ignores
+bin/
+pip-selfcheck.json
+pyvenv.cfg
+
