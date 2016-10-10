@@ -15,9 +15,12 @@ class Meal(models.Model):
     member = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                related_name='meal',
-                               related_query_name=',meal')
+                               related_query_name='meal')
     photo = models.ImageField(upload_directory_path)
     date_created = models.DateField('date created', auto_now_add=True)
+    title = models.CharField("Title", 
+                             name='title',
+                             max_length=128)
 
 
 class Ratting(models.Model):

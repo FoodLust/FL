@@ -9,3 +9,5 @@ class MemberFactory(factory.django.DjangoModelFactory):
 
     username = 'bob24'
     email = 'bob24@bob.com'
+
+
