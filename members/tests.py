@@ -24,5 +24,4 @@ class MemberTestCase(TestCase):
 
     def test_member_is_active(self):
         """ Test to confirm member is made active upon registration """
-        import pdb; pdb.set_trace()
         self.assertTrue(self.user.member.active)
