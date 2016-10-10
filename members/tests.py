@@ -37,3 +37,7 @@ class TestRegistrationView(TestCase):
     def test_register_view_status_code(self):
         """Test status code is 200."""
         self.assertEqual(self.response.status_code, 200)
+
+    def test_register_view_has_form(self):
+        """Test if template has form"""
+        self.assertContains(self.response, "</form>")
