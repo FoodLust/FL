@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class MemberTestCase(TestCase):
@@ -25,3 +26,14 @@ class MemberTestCase(TestCase):
     def test_member_is_active(self):
         """ Test to confirm member is made active upon registration """
         self.assertTrue(self.user.member.active)
+
+class TestRegistrationView(TestCase):
+    """Test Registration View."""
+
+    def setUp(self):
+        """Set up registration."""
+        self.resposne = self.client.get(reverse('registration_register'))
+    
+    def test_register_view_status_code(self):
+        """Test status code is 200."""
+        assertEqual(self.response.status_code, 200)
