@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .mdels import Meal, Ratting
 
-# Register your models here.
+admin.site.register(Meal)
+admin.site.register(Ratting)
