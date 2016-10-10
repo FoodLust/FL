@@ -13,3 +13,7 @@ class MemberTestCase(TestCase):
     def test_user_is_member(self):
         """ Test to confirm that user is a member """
         self.assertTrue(hasattr(self.user, 'member'))
+
+    def test_user_name(self):
+        """ Test to confirm username is correct on member model """
+        self.assertEqual(self.user.username, 'Test User')
