@@ -1,0 +1,7 @@
+Register with picture crap
+--------------------------------------
+
+Activate your new account:
+http://{{site}}/accounts/activate/{{activation_key}}/
+
+Thanks and have a crappy day :)
