@@ -21,6 +21,7 @@ class Member(models.Model):
     """ Model for members of the site """
 
     objects = models.Manager()
+
     active = MemberManager()
 
     user = models.OneToOneField(
