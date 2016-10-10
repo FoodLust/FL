@@ -32,8 +32,8 @@ class TestRegistrationView(TestCase):
 
     def setUp(self):
         """Set up registration."""
-        self.resposne = self.client.get(reverse('registration_register'))
+        self.response = self.client.get(reverse('registration_register'))
     
     def test_register_view_status_code(self):
         """Test status code is 200."""
-        assertEqual(self.response.status_code, 200)
+        self.assertEqual(self.response.status_code, 200)
