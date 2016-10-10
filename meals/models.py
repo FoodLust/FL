@@ -12,7 +12,7 @@ def upload_directory_path(instance, filename):
 
 class Meal(models.Model):
     """Model for a meal."""
-    member = models.ForgienKey(settings.AUTH_USER_MODEL,
+    member = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                related_name='meal',
                                related_query_name=',meal')
