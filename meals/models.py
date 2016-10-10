@@ -25,8 +25,8 @@ class Meal(models.Model):
 
 class Ratting(models.Model):
     """Model for ratting"""
-    memeber = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                related_name='ratting')
+    member = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               related_name='ratting')
     meal = models.ForeignKey('Meal',
                              related_name='ratting')
     # True = like, False = Dislike
