@@ -41,3 +41,9 @@ class TestRegistrationView(TestCase):
     def test_register_view_has_form(self):
         """Test if template has form"""
         self.assertContains(self.response, "</form>")
+
+    def test_register_failure(self):
+        """Test register with bad creditinals."""
+        self.assertEqual(
+            self.client.post(reverse('registration_register'), {}).status_code,
+            200)
