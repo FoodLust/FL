@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import UploadMealView, MealView, RatingView
+from .views import UploadMealView, MealView, RatingView, MealsView
 
 
 urlpatterns = [
@@ -12,14 +12,14 @@ urlpatterns = [
         name='detail_rating'
         ),
 
-    url(r'^(?P<username>[A-Za-z0-9-@.+_]+)/(?P<pk>[0-9-]+)$',
+    url(r'^(?P<pk>[0-9-]+)$',
         MealView.as_view(),
         name='meal'
         ),
 
-    # url(r'^rating/new',
-    #     CreateRatingView.as_view(),
-    #     name='rating'
-    #     )
+    url(r'^$',
+        MealsView.as_view(),
+        name='meals'
+        ),
 
 ]

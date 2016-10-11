@@ -1,19 +1,13 @@
 {% extends 'foodlust/base.html' %}
 {% block body %}
-<div style="border:2px solid black; width:33%">
-    {{ object.title }}
-    <br>
-    <img src="{{ object.photo.url }}" width="100%">
-    <div>
-        Member: {{ object.member.username }}
-    </div>
-    <div>
-        Rating:
-    </div>
-    <div>
-        Like/Dislike
+<h1></h1>
+<div class="meal-rectangle-detail">
+    <div class="container">
+        <h1 class="meal-title-detail">{{ object.title }}</h1>
+        <img class="meal-img-detail" src="{{ object.photo.url }}">
+        <p>Member: {{ object.member.username }}</p>
+        <p>Rating: 86%</p>
+        <p><a href="#">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="float-right" href="#">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
     </div>
 </div>
-
-
 {% endblock %}
