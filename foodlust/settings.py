@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from django.contrib import staticfiles
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = os.environ['FL_SECURITY_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['54.190.47.99']
 
 
 # Application definition
@@ -125,6 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'foodlust', 'static')]
+STATIC_ROOT = [os.path.join(BASE_DIR, 'foodlust', 'static')]
 
 # Media Root and media url
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
