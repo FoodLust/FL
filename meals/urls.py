@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import UploadMealView, MealView, MealViewLiked
+from .views import UploadMealView, MealView, MealViewLiked, MealsView
 
 
 urlpatterns = [
@@ -26,9 +26,9 @@ urlpatterns = [
         name='meal'
         ),
 
-    # url(r'^rating/new',
-    #     CreateRatingView.as_view(),
-    #     name='rating'
-    #     )
+    url(r'^$',
+        MealsView.as_view(),
+        name='meals'
+        ),
 
 ]
