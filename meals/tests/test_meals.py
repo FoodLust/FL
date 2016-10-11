@@ -59,3 +59,19 @@ class MealUploadTestCase(TestCase):
         '''assert view is rendered with our templates'''
         for template_name in ['foodlust/base.html', 'meals/uploads_meal.html']:
             self.assertTemplateUsed(self.response, template_name, count=1)
+
+
+class MealViewTest(TestCase):
+    def setUp(self):
+        self.meal = MealFactory()
+        self.url = reverse('meal', kwargs={
+                           'username': self.meal.member.username,
+                           'pk': str(self.meal.member.pk)}
+                           )
+        self.response = self.client.get(self.url)
+
+    def test_correct_template(self):
+        '''assert view is rendered with our templates'''
+        for template_name in ['foodlust/base.html', 'meals/meal.html']:
+            self.assertTemplateUsed(self.response, template_name, count=1)
+   
