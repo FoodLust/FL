@@ -1,0 +1,27 @@
+{% extends 'foodlust/base.html' %}
+
+{% load static %}
+
+{% block component_css %}
+<link rel="stylesheet" href="{% static 'css/splash_page.css' %}">
+{% endblock %}
+
+{% block splash %}
+<script>new WOW().init();</script>
+<div class="view hm-stylish-light">
+    <img src={{ picture.url }} class='view' style='no-repeat center center fixed'>
+    <div class="full-bg-img flex-center">
+        <ul>
+            <li>
+                <h1 class="h1-responsive wow fadeInUp">Welcome to Food Lust</h1></li>
+            <li>
+                <p class="wow fadeInUp" data-wow-delay="0.2s">It's bananas.</p>
+            </li>
+            <li class="wow fadeInUp" data-wow-delay="0.4s">
+                <a class="btn btn-white-outline btn-lg" href="{% url 'registration_register' %}"><i class="fa fa-user left"></i> Sign up!</a>
+                <a class="btn btn-white-outline btn-lg" href="{% url 'auth_login' %}"<i class="fa fa-sign-in left"></i>Login</a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

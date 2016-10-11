@@ -15,12 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from foodlust.views import home
+from django.conf.urls.static import static
 
 
 urlpatterns = [
-    # url(r'^$', home, name='home'),
+    url(r'^$', home, name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^meal/', include('meals.urls')),
     # url(r'^member/', include('members.urls')),
-]
+] + static(
+    settings.STATIC_URL, document_root=settings.STATIC_ROOT
+) + static(
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+)
