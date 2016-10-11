@@ -1,9 +1,9 @@
 import factory
 from django.contrib.auth.models import User
-from meals.models import Meal, Ratting
+from meals.models import Meal, Rating
 
 
-class MemberFactory(factory.django.DjangoModelFactory):
+class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
 
@@ -15,15 +15,15 @@ class MealFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Meal
 
-    member = factory.SubFactory(MemberFactory)
+    member = factory.SubFactory(UserFactory)
     photo = factory.django.ImageField(color='red')
     title = 'Test meal'
 
 
-class RattingFactory(factory.django.DjangoModelFactory):
+class RatingFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = Ratting
+        model = Rating
 
-    member = factory.SubFactory(MemberFactory)
+    member = factory.SubFactory(UserFactory)
     meal = factory.SubFactory(MealFactory)
     like = True

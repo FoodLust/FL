@@ -1,5 +1,6 @@
 from django.test import TestCase
-from foodlust.tests.factories import MemberFactory, MealFactory, RattingFactory
+from foodlust.tests.factories import UserFactory, MealFactory, RatingFactory
+from django.urls import reverse
 import os
 from io import open
 
@@ -19,27 +20,30 @@ class MealTestCase(TestCase):
         self.assertTrue(hasattr(self.meal, 'photo'))
 
 
-class RattingTestCase(TestCase):
+class RatingTestCase(TestCase):
 
     def setUp(self):
-        self.ratting = RattingFactory()
+        self.rating = RatingFactory()
 
-    def test_ratting(self):
-        self.assertTrue(self.ratting.like)
+    def test_rating(self):
+        self.assertTrue(self.rating.like)
 
 
 class MealUploadTestCase(TestCase):
 
     def setUp(self):
-        self.member = MemberFactory()
+        self.user = UserFactory()
+        self.url = reverse('upload_meal')
 
     def test_upload_meal(self):
+        self.client.force_login(self.user)
         with open(TEST_PHOTO_PATH, 'rb') as fh:
             data = {
                 'title': 'test_title',
                 'photo': fh,
-                'member': self.user.pk,
+                'member': self.user.member.pk,
             }
+            # import pdb; pdb.set_trace()
             respones = self.client.post(self.url, data)
         self.assertEqual(respones.status_code, 302)
 
