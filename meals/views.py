@@ -22,3 +22,9 @@ class UploadMealView(CreateView):
         """Modify form validation to apply a user to an instance."""
         form.instance.member = self.request.user
         return super(UploadMealView, self).form_valid(form)
+
+
+class MealView(DetailView):
+    template_name = 'meals/meal.html'
+    model = Meal
+
