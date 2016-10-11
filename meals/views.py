@@ -2,9 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import CreateView, DetailView
-from .models import Meal
-
+from django.views.generic import CreateView, DetailView, UpdateView
+from .models import Meal, Rating
 
 # @method_decorator(login_required, name='dispatch')
 class UploadMealView(CreateView):
@@ -28,3 +27,6 @@ class MealView(DetailView):
     template_name = 'meals/meal.html'
     model = Meal
 
+class RatingView(DetailView):
+    template_name = 'meals/rating.html'
+    model = Rating
