@@ -1,6 +1,6 @@
-{# {% extends 'imagersite/base.html' %} #}
-
+{% extends 'foodlust/base.html' %}
 {% block body %}
+<h1>Upload a meal</h1>
 <form action="{% url 'upload_meal' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
