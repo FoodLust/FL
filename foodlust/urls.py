@@ -13,9 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from foodlust.views import home
+from django.conf.urls.static import static
+
 
 urlpatterns = [
+    url(r'^$', home, name='home'),
     url(r'^admin/', admin.site.urls),
-]
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
+    url(r'^meal/', include('meals.urls')),
+    # url(r'^member/', include('members.urls')),
+ ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+        )

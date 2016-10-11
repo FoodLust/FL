@@ -1,1 +1,28 @@
-/* YOUR CUSTOM STYLES */
+html { 
+    position: relative;
+    min-height: 100%;
+}
+
+#logo {
+    height: 3rem;
+}
+
+#content {
+    padding-top: 1rem;
+    padding-bottom: 4rem;
+}
+
+.float-right {
+    float: right;
+}
+
+.page-footer {
+    margin-top: 5rem;
+    height: 5rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    padding-top: 1rem;
+}
