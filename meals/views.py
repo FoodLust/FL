@@ -30,3 +30,30 @@ class MealView(DetailView):
 class RatingView(DetailView):
     template_name = 'meals/rating.html'
     model = Rating
+
+# class CreateRatingView(CreateView):
+#     template_name = 'meals/create_rating.html'
+#     model = Rating
+#     success_url = '/'
+#     fields = ['like']
+
+
+# @method_decorator(login_required, name='dispatch')
+class MealViewLiked(CreateView):
+    template_name = 'meals/create_rating.html'
+    model = Rating
+    fields = ['like']
+
+    def form_valid(self, form):
+        """Modify form validation to apply a user to an instance."""
+        form.instance.member = self.request.user
+        meal_number = int(self.request.path.split('/')[2])
+        my_meal = Meal.objects.get(pk=meal_number)
+        form.instance.meal = my_meal
+
+        return super(MealViewLiked, self).form_valid(form)
+
+    def get_success_url(self):
+        """Set redirection upon successful upload."""
+        url = reverse('meal', args=[self.object.meal.pk])
+        return url
