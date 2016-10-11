@@ -57,5 +57,5 @@ class MealUploadTestCase(TestCase):
 
     def test_correct_template(self):
         '''assert view is rendered with our templates'''
-        for template_name in ['foodlust/base.html', 'meal/upload_meal.html']:
+        for template_name in ['foodlust/base.html', 'meals/uploads_meal.html']:
             self.assertTemplateUsed(self.response, template_name, count=1)
