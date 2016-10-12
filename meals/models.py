@@ -17,10 +17,10 @@ class Meal(models.Model):
                                related_name='meal',
                                related_query_name='meal')
     photo = models.ImageField(upload_to=upload_directory_path)
-    date_created = models.DateField('date created', auto_now_add=True)
+    date_created = models.DateTimeField('date created', auto_now_add=True)
     title = models.CharField("Title", 
                              name='title',
-                             max_length=128)
+                             max_length=24)
 
     def __str__(self):
         return self.title
@@ -30,10 +30,11 @@ class Meal(models.Model):
         total = float(total_rated_query.count())
         liked = float(total_rated_query.filter(like=True).count())
         try:
-            percentage = liked / total
+            percentage = int(liked / total)
         except ZeroDivisionError:
-            return 'Not Rated'
-        return '{0:.2f}%'.format(percentage * 100)
+            return -1
+        return percentage * 100
+
 
 class RatingManager(models.Manager):
     def create_rating(self, member, meal, like):
@@ -50,9 +51,7 @@ class Rating(models.Model):
                              related_name='rating')
     # True = like, False = Dislike
     like = models.BooleanField()
-    # rating = models.CharField(max_length=8,
-    #                            choices=[('like', 'like'),
-    #                                     ('dislike', 'dislike')])
+
     objects = RatingManager()
 
     def __str__(self):

@@ -33,13 +33,31 @@ class MealDetailView(DetailView):
 class MealListView(ListView):
     template_name = 'meals/meals.html'
     model = Meal
+    ordering = '-date_created'
 
 
-class RatingView(DetailView):
-    template_name = 'meals/rating.html'
-    model = Rating
+class MealListViewByRating(ListView):
+    template_name = 'meals/meals_by_rating.html'
+    model = Meal
+
+    def get_context_data(self, **kwargs):
+        supered = super(MealListViewByRating, self).get_context_data(**kwargs)
+        sorted_supered = sorted(supered['object_list'], key=lambda meal: meal.percent(), reverse=True)
+        supered['object_list'] = sorted_supered
+        return supered
 
 
+class MealListViewByUser(ListView):
+    template_name = 'meals/meals_by_user.html'
+    model = Meal
+
+    def get_queryset(self, **kwargs):
+        username = self.request.path.split('/')[2]
+        query = Meal.objects.filter(member__username=username)
+        # import pdb; pdb.set_trace()
+        return query
+
+        
 def meal_liked(request, meal_pk):
     meal_pk = int(meal_pk)
     meal = Meal.objects.get(pk=meal_pk)
