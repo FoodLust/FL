@@ -86,9 +86,12 @@ class TestProfile(TestCase):
 
     def test_member_page_status_code(self):
         """Test member page status code."""
-        self.log_in()
+        user = User(username="mike")
+        user.save()
+        self.client.force_login(user)
         self.assertEqual(self.client.get(reverse('member')).status_code, 200)
 
     def test_login_required(self):
         """Test member page requires login."""
+        self.client.logout()
         self.assertEqual(self.client.get(reverse('member')).status_code, 302)
