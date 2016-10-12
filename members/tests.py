@@ -87,6 +87,6 @@ class TestProfile(TestCase):
     def test_member_page_status_code(self):
         """Test member page status code."""
         self.log_in()
-        self.assertEqual(self.client.get(reverse('member').status_code), 200)
+        self.assertEqual(self.client.get(reverse('member')).status_code, 200)
 
     
