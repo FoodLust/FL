@@ -6,8 +6,8 @@
         <h1 class="meal-title-detail">{{ object.title }}</h1>
         <img class="meal-img-detail" src="{{ object.photo.url }}">
         <p>Member: {{ object.member.username }}</p>
-        <p>Rating: 86%</p>
-        <p><a href="#">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="float-right" href="#">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+        <p>Rating: {{ object.percent }}</p>
+        <p><a href="{{ object.pk }}/liked/">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="float-right" href="{{ object.pk }}/disliked">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
     </div>
 </div>
 {% endblock %}

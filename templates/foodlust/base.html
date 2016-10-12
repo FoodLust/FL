@@ -19,18 +19,19 @@
         <div class="container">
           <div class="collapse navbar-toggleable-xs" id="collapseEx22">
             <ul class="nav navbar-nav">
-              <li class="nav-item"><a class="nav-link" href="/"><i class="fa fa-lg fa-home"></i> Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="/meal"><i class="fa fa-lg fa-cutlery"></i> Meals</a></li>
-            </ul>
-            <ul class="nav navbar-nav pull-right">
-              <li class="nav-item btn-group">
-                <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Profile</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <a class="dropdown-item" href="/profile">Profile</a>
-                  <a class="dropdown-item" href="/meal/upload">Upload</a>
-                  <a class="dropdown-item" href="/logout">Logout</a>
-                </div>
-              </li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fa fa-lg fa-home"></i> Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'meals' %}"><i class="fa fa-lg fa-cutlery"></i> Meals</a></li>
+              {% if request.user.username %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'upload_meal' %}"><i class="fa fa-lg fa-upload"></i> Uplaod a meal</a></li>
+              </ul>
+              <ul class="nav navbar-nav pull-right">
+                <li class="nav-item"><a class="nav-link" href="/profile"><i class="fa fa-lg fa-user"></i> Profile {{ request.user.username }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}"><i class="fa fa-lg fa-sign-out"></i>Log-out</a></li>
+              {% else %}
+                <ul class="nav navbar-nav pull-right">
+                  <li class="nav-item"><a class="nav-link" href="{% url 'auth_login' %}"><i class="fa fa-lg fa-sign-in"></i>Log-in</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}"><i class="fa fa-lg fa-user-plus"></i>Sign-up</a></li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -48,7 +49,7 @@
       <!--Footer-->
       <footer class="page-footer default-color center-on-small-only">
         <div class="container-fluid">
-          <a href="/about"><i class="fa fa-lg fa-info-circle"></i> About</a></li> 
+          <a href="{% url 'about' %}"><i class="fa fa-lg fa-info-circle"></i> About</a></li> 
           <span class="float-right"><a href="https://github.com/FoodLust/FL" target="_blank"><i class="fa fa-lg fa-github"></i> Fork it</a></li></span>
         </div>
       </footer>
