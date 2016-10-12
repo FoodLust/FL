@@ -26,6 +26,13 @@ class Meal(models.Model):
         return self.title
 
 
+class RatingManager(models.Manager):
+    def create_rating(self, member, meal, like):
+        rating = self.create(member=member, meal=meal, like=like)
+        # do something with the book
+        return rating
+
+
 class Rating(models.Model):
     """Model for rating"""
     member = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -37,6 +44,7 @@ class Rating(models.Model):
     # rating = models.CharField(max_length=8,
     #                            choices=[('like', 'like'),
     #                                     ('dislike', 'dislike')])
+    objects = RatingManager()
 
     def __str__(self):
         return '{} - {} - {}'.format(self.meal.title, self.member.username, self.like)
