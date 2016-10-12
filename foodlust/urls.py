@@ -27,7 +27,8 @@ urlpatterns = [
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^meals/', include('meals.urls')),
     url(r'^logout/$', auth_views.logout, name='logout'),
-    url(r'^about/', about, name='about')
+    url(r'^about/', about, name='about'),
+    url(r'^member', member, name='member')
 ]
 
 
