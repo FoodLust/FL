@@ -89,4 +89,6 @@ class TestProfile(TestCase):
         self.log_in()
         self.assertEqual(self.client.get(reverse('member')).status_code, 200)
 
-    
+    def test_login_required(self):
+        """Test member page requires login."""
+        self.assertEqual(self.client.get(reverse('member')).status_code, 302)
