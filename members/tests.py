@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 class MemberTestCase(TestCase):
-    """ This class will establish the test cases for the member model """
+    """ This class will establish the test cases for the member model."""
 
     def setUp(self):
         """ Setup for Member model test """
@@ -49,7 +49,7 @@ class TestRegistrationView(TestCase):
             200)
 
 
-class TestProfile(TestCase):
+class TestMemberView(TestCase):
     """Test profile view."""
 
     def setUp(self):
@@ -66,3 +66,9 @@ class TestProfile(TestCase):
         """Test member page requires login."""
         self.client.logout()
         self.assertEqual(self.client.get(reverse('member')).status_code, 302)
+
+    def test_template_has_profile_tag(self):
+        """Test template contains the word profile."""
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('member'))
+        self.assertContains(response, '<h1>Profile</h1>')
