@@ -47,9 +47,10 @@ class MealListViewByRating(ListView):
         return supered
 
 
-class RatingView(DetailView):
-    template_name = 'meals/rating.html'
-    model = Rating
+class MealListViewByUser(ListView):
+    template_name = 'meals/meals_by_user.html'
+    model = Meal
+    queryset = Meal.objects.filter(meal__member__username=username)
 
 
 def meal_liked(request, meal_pk):

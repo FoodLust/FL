@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import UploadMealView, MealDetailView, MealListView, meal_liked, meal_disliked, MealListViewByRating
+from .views import UploadMealView, MealDetailView, MealListView, meal_liked, meal_disliked, MealListViewByRating, MealListViewByUser
 
 
 urlpatterns = [
@@ -30,6 +30,11 @@ urlpatterns = [
 
     url(r'^by_rating/$',
         MealListViewByRating.as_view(),
+        name='meals_by_rating'
+        ),
+
+    url(r'^(?P<username>[A-Za-z0-9-@._+]*)/$',
+        MealListViewByUser.as_view(),
         name='meals_by_rating'
         ),
 ]
