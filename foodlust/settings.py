@@ -25,7 +25,7 @@ SECRET_KEY = os.environ['FL_SECURITY_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
-ALLOWED_HOSTS = '54.190.47.99'
+ALLOWED_HOSTS = ['54.190.47.99']
 
 
 # Application
@@ -125,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'foodlust', 'static')]
-# STATIC_ROOT = [os.path.join(BASE_DIR, 'foodlust', 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media Root and media url
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
