@@ -57,7 +57,7 @@ class TestProfile(TestCase):
         self.username = 'testname'
         self.password = 'testpassword123'
         self.email = 'somehing@something.com'
-        csrf = self.get_csrf_token(reverse('registration_register'__build_class__))
+        csrf = self.get_csrf_token(reverse('registration_register'))
         self.client.post(reverse('registration_register'), dict(
             csrfmiddlewaretoken=csrf,
             username=self.username,
@@ -65,7 +65,7 @@ class TestProfile(TestCase):
             password2=self.password,
             email=self.email,
         ))
-        self.client.get('/', + path)
+
 
     def get_csrf_token(self, url):
         """Get a csrf token for testing."""
@@ -86,7 +86,7 @@ class TestProfile(TestCase):
 
     def test_member_page_status_code(self):
         """Test member page status code."""
-        self.login()
+        self.log_in()
         self.assertEqual(self.client.get(reverse('member').status_code), 200)
 
     
