@@ -54,7 +54,7 @@ class TestMemberView(TestCase):
 
     def setUp(self):
         """Set up for authenticated user."""
-        self.user = User(username="mike")
+        self.user = User(username="mike", first_name='mike')
         self.user.save()
 
     def test_member_page_status_code(self):
@@ -78,3 +78,9 @@ class TestMemberView(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse('member'))
         self.assertContains(response, self.user.username)
+
+    def test_template_contains_first_name(self):
+        """Test member page has first name."""
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('member'))
+        self.assertContains(response, 'mike')
