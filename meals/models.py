@@ -25,6 +25,15 @@ class Meal(models.Model):
     def __str__(self):
         return self.title
 
+    def percent(self):
+        total_rated_query = Rating.objects.filter(meal__pk=self.pk)
+        total = float(total_rated_query.count())
+        liked = float(total_rated_query.filter(like=True).count())
+        try:
+            percentage = liked / total
+        except ZeroDivisionError:
+            return 'Not Rated'
+        return '{0:.2f}%'.format(percentage * 100)
 
 class RatingManager(models.Manager):
     def create_rating(self, member, meal, like):

@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -25,7 +26,7 @@ class UploadMealView(CreateView):
 
 
 class MealDetailView(DetailView):
-    template_name = 'meals/meal.html'
+    template_name = 'meals/meal_detail.html'
     model = Meal
 
 
@@ -39,11 +40,35 @@ class RatingView(DetailView):
     model = Rating
 
 
-def meal_view_liked(request, meal_pk):
-    # import pdb; pdb.set_trace()
+def meal_liked(request, meal_pk):
     meal_pk = int(meal_pk)
     meal = Meal.objects.get(pk=meal_pk)
     like = True
     member = request.user
-    Rating.objects.create_rating(member, meal, like)
+
+    try:
+        rating = Rating.objects.get(member=member, meal=meal)
+    except ObjectDoesNotExist:
+        Rating.objects.create_rating(member, meal, like)
+        return redirect('meals')
+
+    rating.like = like
+    rating.save()
+    return redirect('meals')
+
+
+def meal_disliked(request, meal_pk):
+    meal_pk = int(meal_pk)
+    meal = Meal.objects.get(pk=meal_pk)
+    like = False
+    member = request.user
+
+    try:
+        rating = Rating.objects.get(member=member, meal=meal)
+    except ObjectDoesNotExist:
+        Rating.objects.create_rating(member, meal, like)
+        return redirect('meals')
+
+    rating.like = like
+    rating.save()
     return redirect('meals')
