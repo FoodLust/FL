@@ -1,6 +1,11 @@
 {% extends 'foodlust/base.html' %}
 
 {% block body %}
-
-  rating
+  {{ object }}
+  <br>
+  {% if object.like %}
+    Like
+  {% else %}
+    Dislike
+  {% endif %}
 {% endblock %}
