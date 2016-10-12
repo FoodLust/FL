@@ -1,7 +1,7 @@
-Register with picture crap
+Register with food lust
 --------------------------------------
 
 Activate your new account:
 http://{{site}}/accounts/activate/{{activation_key}}/
 
-Thanks and have a crappy day :)
+Thanks and happy eating :)
