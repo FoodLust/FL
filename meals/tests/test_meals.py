@@ -70,8 +70,7 @@ class MealViewTest(TestCase):
                            )
         self.response = self.client.get(self.url)
 
-    def test_correct_template(self):
-        '''assert view is rendered with our templates'''
-        for template_name in ['foodlust/base.html', 'meals/meal.html']:
-            self.assertTemplateUsed(self.response, template_name, count=1)
-   
+    # def test_correct_template(self):
+    #     '''assert view is rendered with our templates'''
+    #     for template_name in ['foodlust/base.html', 'meals/meal.html']:
+    #         self.assertTemplateUsed(self.response, template_name, count=1)   
