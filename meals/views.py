@@ -50,9 +50,14 @@ class MealListViewByRating(ListView):
 class MealListViewByUser(ListView):
     template_name = 'meals/meals_by_user.html'
     model = Meal
-    queryset = Meal.objects.filter(meal__member__username=username)
 
+    def get_queryset(self, **kwargs):
+        username = self.request.path.split('/')[2]
+        query = Meal.objects.filter(member__username=username)
+        # import pdb; pdb.set_trace()
+        return query
 
+        
 def meal_liked(request, meal_pk):
     meal_pk = int(meal_pk)
     meal = Meal.objects.get(pk=meal_pk)

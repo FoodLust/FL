@@ -17,7 +17,7 @@ class Meal(models.Model):
                                related_name='meal',
                                related_query_name='meal')
     photo = models.ImageField(upload_to=upload_directory_path)
-    date_created = models.DateField('date created', auto_now_add=True)
+    date_created = models.DateTimeField('date created', auto_now_add=True)
     title = models.CharField("Title", 
                              name='title',
                              max_length=24)
@@ -32,7 +32,7 @@ class Meal(models.Model):
         try:
             percentage = int(liked / total)
         except ZeroDivisionError:
-            return 'Not Rated'
+            return -1
         return percentage * 100
 
 

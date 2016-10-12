@@ -12,7 +12,11 @@
                 <h2 class="meal-title-list"><a href="/meals/{{meal.pk}}">{{ meal.title }}</a></h2>
                 <a href="/meals/{{meal.pk}}"><img class="meal-img-list" src="{{ meal.photo.url }}"></a>
                 <p>Member: {{ meal.member.username }}</p>
-                <p>Rating: {{ meal.percent }}%</p>
+                {% if meal.percent >= 0 %}
+                    <p>Rating: {{ meal.percent }}%</p>
+                {% else %}
+                    <p>Not yet rated</p>
+                {% endif %}
                 <p><a href="{{ meal.pk }}/liked/">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="float-right" href="{{ meal.pk }}/disliked">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
             </div>
         </div>
