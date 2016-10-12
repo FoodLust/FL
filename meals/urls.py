@@ -1,6 +1,5 @@
 from django.conf.urls import url
-from .views import UploadMealView, MealDetailView, MealListView
-# , mealViewLiked
+from .views import UploadMealView, MealDetailView, MealListView, meal_view_liked
 
 
 urlpatterns = [
@@ -9,10 +8,10 @@ urlpatterns = [
         name='upload_meal'
         ),
 
-    # url(r'^(?P<pk>[0-9-]+)/liked$',
-    #     mealViewLiked(),
-    #     name='meal-liked',
-    #     ),
+    url(r'^(?P<meal_pk>[0-9-]+)/liked/$',
+        meal_view_liked,
+        name='meal-liked',
+        ),
 
     url(r'^(?P<pk>[0-9-]+)$',
         MealDetailView.as_view(),
