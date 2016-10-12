@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from foodlust.views import home
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^meals/', include('meals.urls')),
+    url(r'^logout/$', auth_views.logout, name='logout'),
     # url(r'^member/', include('members.urls')),
  ]
 
