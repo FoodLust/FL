@@ -72,3 +72,9 @@ class TestMemberView(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse('member'))
         self.assertContains(response, '<h1>Profile</h1>')
+
+    def test_template_contains_username(self):
+        """Test member page has username."""
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('member'))
+        self.assertContains(response, self.user.username)
