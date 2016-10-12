@@ -1,6 +1,7 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
+from django.test import TestCase
 from django.urls import reverse
+from foodlust.tests.factories import UserFactory, MealFactory
 
 
 class MemberTestCase(TestCase):
@@ -84,3 +85,10 @@ class TestMemberView(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse('member'))
         self.assertContains(response, 'mike')
+
+    def test_meals_on_member_page(self):
+        """Test meals show up on member page."""
+        self.meal = MealFactory()
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('member'))
+        self.assertContains(response, self.meal.id)
