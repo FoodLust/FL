@@ -126,7 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'foodlust', 'static')]
-STATIC_ROOT = [os.path.join(BASE_DIR, 'foodlust', 'static')]
+# STATIC_ROOT = [os.path.join(BASE_DIR, 'foodlust', 'static')]
 
 # Media Root and media url
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

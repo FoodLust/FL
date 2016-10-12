@@ -40,3 +40,10 @@ class Rating(models.Model):
 
     def __str__(self):
         return '{} - {} - {}'.format(self.meal.title, self.member.username, self.like)
+
+class RatingManager(models.Manager):
+    
+    def create_rating(self, member, meal, like):
+        rating = self.create(member=member, meal=meal, like=like)
+        # do something with the book
+        return rating
