@@ -54,41 +54,12 @@ class TestProfile(TestCase):
 
     def setUp(self):
         """Set up for authenticated user."""
-        self.username = 'testname'
-        self.password = 'testpassword123'
-        self.email = 'somehing@something.com'
-        csrf = self.get_csrf_token(reverse('registration_register'))
-        self.client.post(reverse('registration_register'), dict(
-            csrfmiddlewaretoken=csrf,
-            username=self.username,
-            password1=self.password,
-            password2=self.password,
-            email=self.email,
-        ))
-
-
-    def get_csrf_token(self, url):
-        """Get a csrf token for testing."""
-        return self.client.get(url).context['csrf_token']
-
-
-    def log_in(self, username=None, password=None):
-        """Log user in."""
-
-        csrf = self.get_csrf_token(reverse('auth_login'))
-        username = username or self.username
-        password = password or self.password
-        return self.client.post(reverse('auth_login'), dict(
-            username=username,
-            password=password,
-            csrfmiddlewaretoken=csrf
-        ))
+        self.user = User(username="mike")
+        self.user.save()
 
     def test_member_page_status_code(self):
         """Test member page status code."""
-        user = User(username="mike")
-        user.save()
-        self.client.force_login(user)
+        self.client.force_login(self.user)
         self.assertEqual(self.client.get(reverse('member')).status_code, 200)
 
     def test_login_required(self):
