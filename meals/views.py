@@ -1,22 +1,23 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import CreateView, DetailView
-from .models import Meal
+from django.views.generic import CreateView, DetailView, UpdateView, ListView
+from .models import Meal, Rating, RatingManager
+from members.models import Member
 
 
 # @method_decorator(login_required, name='dispatch')
 class UploadMealView(CreateView):
     template_name = 'meals/uploads_meal.html'
     model = Meal
-    success_url = '/'
     fields = ['title', 'photo']
 
-    # def get_success_url(self):
-        # """Set redirection upon successful upload."""
-        # url = reverse('library_view')
-        # return url
+    def get_success_url(self):
+        """Set redirection upon successful upload."""
+        url = reverse('meals')
+        return url
 
     def form_valid(self, form):
         """Modify form validation to apply a user to an instance."""
@@ -24,7 +25,50 @@ class UploadMealView(CreateView):
         return super(UploadMealView, self).form_valid(form)
 
 
-class MealView(DetailView):
-    template_name = 'meals/meal.html'
+class MealDetailView(DetailView):
+    template_name = 'meals/meal_detail.html'
     model = Meal
 
+
+class MealListView(ListView):
+    template_name = 'meals/meals.html'
+    model = Meal
+
+
+class RatingView(DetailView):
+    template_name = 'meals/rating.html'
+    model = Rating
+
+
+def meal_liked(request, meal_pk):
+    meal_pk = int(meal_pk)
+    meal = Meal.objects.get(pk=meal_pk)
+    like = True
+    member = request.user
+
+    try:
+        rating = Rating.objects.get(member=member, meal=meal)
+    except ObjectDoesNotExist:
+        Rating.objects.create_rating(member, meal, like)
+        return redirect('meals')
+
+    rating.like = like
+    rating.save()
+    return redirect('meals')
+
+
+def meal_disliked(request, meal_pk):
+    meal_pk = int(meal_pk)
+    meal = Meal.objects.get(pk=meal_pk)
+    like = False
+    member = request.user
+
+    try:
+        rating = Rating.objects.get(member=member, meal=meal)
+    except ObjectDoesNotExist:
+        Rating.objects.create_rating(member, meal, like)
+        return redirect('meals')
+
+    rating.like = like
+    rating.save()
+    return redirect('meals')

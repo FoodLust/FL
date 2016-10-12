@@ -3,17 +3,61 @@ html {
     min-height: 100%;
 }
 
+h1 {
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
 #logo {
     height: 3rem;
 }
 
 #content {
     padding-top: 1rem;
-    padding-bottom: 4rem;
+    padding-bottom: 7rem;
 }
 
 .float-right {
     float: right;
+}
+
+.meal-rectangle-detail {
+    margin: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #2bbbad;
+    width: 40rem;
+    background-color: #f1f1f1;
+}
+
+.meal-rectangle-list {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #2bbbad;
+    background-color: #f1f1f1;
+    margin-bottom: 2rem;
+}
+
+.meal-img-detail {
+    width: 100%;
+}
+
+.meal-img-list {
+    height: 10rem;
+    display: block;
+    margin: auto;
+}
+
+.meal-title-detail {
+    text-align: center;
+}
+
+.meal-title-list {
+    text-align: center;
+}
+
+.meal-title-list a {
+    color: #373a3c!important;
 }
 
 .page-footer {
