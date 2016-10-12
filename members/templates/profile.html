@@ -6,4 +6,8 @@ User: {{ username }}</br>
 First Name: {{ first_name }}</br>
 Last Name: {{ last_name }}</br>
 Email: {{ email }}</br>
+My Meals:</br>
+{% for meal in meals %}
+<a href="{% url 'meal' pk=meal.id %}">{{ meal.title }}</a></br>
+{% endfor %}
 {% endblock %}
