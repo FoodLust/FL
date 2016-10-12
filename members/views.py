@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def member_view(request):
     """Return a rendered profile view of member."""
+    import pdb; pdb.set_trace()
     return render(request, 'profile.html',context={
         'username': request.user.username,
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'email': request.user.email,
     })
