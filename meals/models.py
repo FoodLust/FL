@@ -62,4 +62,9 @@ class Comment(models.Model):
     """Model for a comment"""
     meal = models.ForeignKey('Meal', related_name='comment')
     message = models.TextField()
-    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               related_name='comment')
+    date_created = models.DateTimeField('date created', auto_now_add=True)
+
+
+
