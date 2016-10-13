@@ -33,7 +33,7 @@ class MealListView(ListView):
     template_name = 'meals/meals.html'
     model = Meal
     ordering = '-date_created'
-    paginate_by = 3
+    paginate_by = 24
 
     def get_context_data(self, **kwargs):
         context_data = super(MealListView, self).get_context_data(**kwargs)
@@ -44,7 +44,7 @@ class MealListView(ListView):
 class MealListViewTopRated(ListView):
     template_name = 'meals/meals.html'
     model = Meal
-    paginate_by = 3
+    paginate_by = 24
 
     def get_context_data(self, **kwargs):
         context_data = super(MealListViewTopRated, self).get_context_data(**kwargs)
@@ -58,7 +58,7 @@ class MealListViewByUser(ListView):
     template_name = 'meals/meals.html'
     model = Meal
     ordering = '-date_created'
-    paginate_by = 3
+    paginate_by = 24
 
     def get_queryset(self, **kwargs):
         username = self.request.path.split('/')[2]
@@ -77,7 +77,7 @@ class MealListMyMeals(ListView):
     template_name = 'meals/meals.html'
     model = Meal
     ordering = '-date_created'
-    paginate_by = 3
+    paginate_by = 24
 
     def get_queryset(self, **kwargs):
         username = self.request.user.username
