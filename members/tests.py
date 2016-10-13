@@ -47,3 +47,15 @@ class TestRegistrationView(TestCase):
         self.assertEqual(
             self.client.post(reverse('registration_register'), {}).status_code,
             200)
+
+class FindPageTest(TestCase):
+    '''Test to see if member view will return a 200 status code.'''
+    def test_member_page_exists(self):
+        """assert that the response for the meals url is 200"""
+        response = self.client.get('/member')
+        self.assertEqual(response.status_code, 200)
+
+    def test_member_page_edit_exists(self):
+        """assert that the response for the meals url is 200"""
+        response = self.client.get('/member/edit')
+        self.assertEqual(response.status_code, 200)

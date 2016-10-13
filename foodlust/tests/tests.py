@@ -8,15 +8,10 @@ class HomeViewTestCase(TestCase):
 
     def setUp(self):
         """Setup for Home View."""
-        self.meal = MealFactory()
-
         # self.response = self.client.get(reverse('home'))
 
     def tearDown(self):
         pass
-
-    # def test_homeview_status_code(self):
-    #     self.assertEqual(self.response.status_code, 200)
 
     # def test_homeview_contains_login(self):
     #     self.assertContains(self.response.status_code, 200)
@@ -27,14 +22,15 @@ class HomeViewTestCase(TestCase):
     #     self.assertEqual(response.status_code, 200)
     
     def test_for_registration_button(self):
+        """Test to see if login page has link to registration."""
         pass
 
 class FindPageTest(TestCase):
     def test_homeview_exists(self):
         response = self.client.get('/')
-        self.assertEqual(self.response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_about_view_exists(self):
-        response = self.client.get('about/')
-        self.assertEqual(self.response.status_code, 200)
+        response = self.client.get('/about/')
+        self.assertEqual(response.status_code, 200)
 
