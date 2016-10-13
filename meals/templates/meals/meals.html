@@ -1,6 +1,11 @@
 {% extends 'foodlust/base.html' %}
+{% load static %}
+{% block component_css %}
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+{% endblock %}
+
 {% block body %}
-<h1>Newest meals</h1>
+<h1>{{ heading }}</h1>
 
 {% for meal in object_list %}
     {% if forloop.counter0|divisibleby:3 %}
@@ -8,16 +13,19 @@
     {% endif %}
     <div class='col-md-4'>
         <div class="meal-rectangle-list">
-            <div class="container">
-                <h2 class="meal-title-list"><a href="/meals/{{meal.pk}}">{{ meal.title }}</a></h2>
-                <a href="/meals/{{meal.pk}}"><img class="meal-img-list" src="{{ meal.photo.url }}"></a>
-                <p>Member: {{ meal.member.username }}</p>
+            <div class="container hoverable">
+                <h2 class="meal-title-list"><a href="{% url 'meal' pk=meal.pk%}">{{ meal.title }}</a></h2>
+                <div class="view hm-zoom">
+                  <a href="{% url 'meal' pk=meal.pk%}"><img class="meal-img-list" src="{{ meal.photo.url }}"></a>
+                </div>
+                <p>Member: <a href="{% url 'meals_by_user' username=meal.member.username %}"> {{ meal.member.username }}</a></p>
+                <p>Upload date: {{ meal.date_created|date:'d M Y' }}</p>
                 {% if meal.percent >= 0 %}
                     <p>Rating: {{ meal.percent }}%</p>
                 {% else %}
                     <p>Not yet rated</p>
                 {% endif %}
-                <p><a href="{{ meal.pk }}/liked/">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="float-right" href="{{ meal.pk }}/disliked">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up pull-xs-left"></i></a><a class="pull-xs-right" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
             </div>
         </div>
         {% if forloop.counter|divisibleby:3 and not forloop.last %}
@@ -28,4 +36,20 @@
         {% endif %}
     </div>
 {% endfor %}
+{% endblock %}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
 {% endblock %}

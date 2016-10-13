@@ -1,4 +1,4 @@
-html { 
+html {
     position: relative;
     min-height: 100%;
 }
@@ -15,10 +15,6 @@ h1 {
 #content {
     padding-top: 1rem;
     padding-bottom: 7rem;
-}
-
-.float-right {
-    float: right;
 }
 
 .meal-rectangle-detail {
@@ -61,12 +57,8 @@ h1 {
 }
 
 .page-footer {
-    margin-top: 5rem;
-    height: 5rem;
-    position: absolute;
+    /*margin-top: 5rem;*/
+    height: 3rem;
     bottom: 0;
     width: 100%;
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-top: 1rem;
-}
+  }

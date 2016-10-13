@@ -8,7 +8,6 @@ from .models import Meal, Rating, RatingManager
 from members.models import Member
 
 
-# @method_decorator(login_required, name='dispatch')
 class UploadMealView(CreateView):
     template_name = 'meals/uploads_meal.html'
     model = Meal
@@ -34,30 +33,64 @@ class MealListView(ListView):
     template_name = 'meals/meals.html'
     model = Meal
     ordering = '-date_created'
-
-
-class MealListViewByRating(ListView):
-    template_name = 'meals/meals_by_rating.html'
-    model = Meal
+    paginate_by = 24
 
     def get_context_data(self, **kwargs):
-        supered = super(MealListViewByRating, self).get_context_data(**kwargs)
-        sorted_supered = sorted(supered['object_list'], key=lambda meal: meal.percent(), reverse=True)
-        supered['object_list'] = sorted_supered
-        return supered
+        context_data = super(MealListView, self).get_context_data(**kwargs)
+        context_data['heading'] = 'Newest meals'
+        return context_data
+
+
+class MealListViewTopRated(ListView):
+    template_name = 'meals/meals.html'
+    model = Meal
+    paginate_by = 24
+
+    def get_context_data(self, **kwargs):
+        context_data = super(MealListViewTopRated, self).get_context_data(**kwargs)
+        sorted_context_data = sorted(context_data['object_list'], key=lambda meal: meal.percent(), reverse=True)
+        context_data['object_list'] = sorted_context_data
+        context_data['heading'] = 'Top rated meals'
+        return context_data
 
 
 class MealListViewByUser(ListView):
-    template_name = 'meals/meals_by_user.html'
+    template_name = 'meals/meals.html'
     model = Meal
+    ordering = '-date_created'
+    paginate_by = 24
 
     def get_queryset(self, **kwargs):
         username = self.request.path.split('/')[2]
         query = Meal.objects.filter(member__username=username)
-        # import pdb; pdb.set_trace()
         return query
 
-        
+    def get_context_data(self, **kwargs):
+        context_data = super(MealListViewByUser, self).get_context_data(**kwargs)
+        username = self.request.path.split('/')[2]
+        context_data['heading'] = 'Meals by{}'.format(username)
+        return context_data
+
+
+@method_decorator(login_required, name='dispatch')
+class MealListMyMeals(ListView):
+    template_name = 'meals/meals.html'
+    model = Meal
+    ordering = '-date_created'
+    paginate_by = 24
+
+    def get_queryset(self, **kwargs):
+        username = self.request.user.username
+        query = Meal.objects.filter(member__username=username)
+        return query
+
+    def get_context_data(self, **kwargs):
+        context_data = super(MealListMyMeals, self).get_context_data(**kwargs)
+        context_data['heading'] = 'My meals'
+        return context_data
+
+
+@login_required
 def meal_liked(request, meal_pk):
     meal_pk = int(meal_pk)
     meal = Meal.objects.get(pk=meal_pk)
@@ -75,6 +108,7 @@ def meal_liked(request, meal_pk):
     return redirect('meals')
 
 
+@login_required
 def meal_disliked(request, meal_pk):
     meal_pk = int(meal_pk)
     meal = Meal.objects.get(pk=meal_pk)

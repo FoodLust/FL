@@ -1,9 +1,14 @@
 {% extends 'foodlust/base.html' %}
+{% load static %}
+{% block component_css %}
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+{% endblock %}
+
 {% block body %}
 <h1>Upload a meal</h1>
-<form action="{% url 'upload_meal' %}" method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit">
-</form>
+  <form action="{% url 'upload_meal' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a class="btn btn-default" href=""><input type="submit" value="Submit" style="display: none">Submit</a>
+  </form>
 {% endblock %}
