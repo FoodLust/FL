@@ -28,7 +28,17 @@
                 {% else %}
                     <p>Not yet rated</p>
                 {% endif %}
-                <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up pull-xs-left"></i></a><a class="pull-xs-right" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+
+                {% if meal in meals_user_liked %}
+                    <p><span style="color:grey"> Like <i class="fa fa-lg fa-thumbs-o-up"></i></span>
+                    <a class="pull-xs-right" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                {% elif meal in meals_user_disliked %}
+                    <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                    <span style="color:grey" class="pull-xs-right">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></span></p>
+                {% else %}
+                    <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="pull-xs-right" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                {% endif %}
+
             </div>
         </div>
         {% if forloop.counter|divisibleby:3 and not forloop.last %}

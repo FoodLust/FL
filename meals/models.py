@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 
 
-# Create your models here.
-
 def upload_directory_path(instance, filename):
     return '{}/{}'.format(
         instance.member.username,
@@ -39,7 +37,6 @@ class Meal(models.Model):
 class RatingManager(models.Manager):
     def create_rating(self, member, meal, like):
         rating = self.create(member=member, meal=meal, like=like)
-        # do something with the book
         return rating
 
 
