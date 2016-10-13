@@ -34,7 +34,7 @@ class UserForm(ModelForm):
 def edit_member_view(request):
     """Edit member view."""
     template_name = 'edit_member.html'
-    user = get_object_or_404(User)
+    user = request.user
     form = UserForm(request.POST or None, instance=user)
     if form.is_valid():
         form.save()
