@@ -1,6 +1,8 @@
+from datetime import datetime
 from django.test import TestCase
 from foodlust.tests.factories import UserFactory, MealFactory, RatingFactory
 from meals.models import Comment, Meal
+from django.contrib.auth.models import User
 from django.urls import reverse
 import os
 from io import open
@@ -82,8 +84,11 @@ class CommentTestCase(TestCase):
     """Test module for the comments model."""
     def setUp(self):
         self.meal = MealFactory()
+        self.user = User(username='Guy')
+        self.user.save()
         self.comment = Comment()
         self.comment.meal = self.meal
+        self.comment.user = self.user
         self.comment.save()
 
 
@@ -97,4 +102,16 @@ class CommentTestCase(TestCase):
     def test_comment_meal_is_a_meal(self):
         """Test to see if the meal that is on test comment is a meal."""
         self.assertTrue(isinstance(self.comment.meal, Meal))
+
+    def test_comment_user(self):
+        """Test to see if comment is from a user."""
+        self.assertTrue(isinstance(self.comment.user, User))
+
+    def test_comment_date(self):
+        """Test to see if comment is from a user."""
+        format_string = "%Y-%m-%d"
+        expected_date = datetime.utcnow().strftime(format_string)
+        date = self.comment.date_created.strftime(format_string)
+        self.assertEqual(expected_date, date)
+
 
