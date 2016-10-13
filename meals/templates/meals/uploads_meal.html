@@ -5,6 +5,7 @@
   <form action="{% url 'upload_meal' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <a class="btn btn-default" href=""><input type="submit" value="Submit" style="display: none">Submit</a>
+    <input type="submit" value="Submit">
+    <!-- <a class="btn btn-default" href=""><input type="submit" value="Submit" style="display: none">Submit</a> -->
   </form>
 {% endblock %}
