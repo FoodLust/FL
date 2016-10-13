@@ -1,19 +1,25 @@
 {% extends 'foodlust/base.html' %}
 {% block body %}
+<div class="container">
 <div class="meal-rectangle-detail">
-    <div class="container">
         <h1 class="meal-title-detail text-xs-center p-a-2">{{ object.title }}</h1>
         <div class="view hm-zoom">
           <img class="meal-img-detail" src="{{ object.photo.url }}">
         </div>
-        <p>Member: {{ object.member.username }}</p>
-        <p>Upload date: {{ object.date_created|date:'d M Y' }}</p>                 
-        {% if meal.percent >= 0 %}
-        <p>Rating: {{ meal.percent }}%</p>
-        {% else %}
-        <p>Not yet rated</p>
-        {% endif %}</p> 
-        <p><a href="{{ object.pk }}/liked/">Like <i class="fa fa-lg fa-thumbs-o-up pull-xs-left"></i></a><a class="pull-xs-right" href="{{ object.pk }}/disliked">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+
+        <div class="container">
+          <p>Member: {{ object.member.username }}</p>
+          <p>Upload date: {{ object.date_created|date:'d M Y' }}</p>
+            {% if meal.percent >= 0 %}
+            <p>Rating: {{ meal.percent }}%</p>
+            {% else %}
+            <p>Not yet rated</p>
+            {% endif %}</p> 
+            </div>
+        <div class="container">
+          <a href="{{ object.pk }}/liked/">Like <i class="fa fa-lg fa-thumbs-o-up pull-xs-left"></i></a><a class="pull-xs-right" href="{{ object.pk }}/disliked">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+        </div>
+
         <hr>
         <p>Comments:</p>
         {% for comment in comments %}
