@@ -1,9 +1,10 @@
 from django.test import TestCase
 from foodlust.tests.factories import UserFactory, MealFactory, RatingFactory
-from meals.models import Comment
+from meals.models import Comment, Meal
 from django.urls import reverse
 import os
 from io import open
+
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -92,4 +93,8 @@ class CommentTestCase(TestCase):
     def test_comment_has_message(self):
         """Test comment model has attribute message."""
         self.assertTrue(hasattr(self.comment, 'message'))
+
+    def test_comment_meal_is_a_meal(self):
+        """Test to see if the meal that is on test comment is a meal."""
+        self.assertTrue(isinstance(self.comment.meal, Meal))
 
