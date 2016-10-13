@@ -10,4 +10,5 @@ My Meals:</br>
 {% for meal in meals %}
 <a href="{% url 'meal' pk=meal.id %}">{{ meal.title }}</a></br>
 {% endfor %}
+<button><a href="{% url 'member_edit' %}">Edit</a></button>
 {% endblock %}
