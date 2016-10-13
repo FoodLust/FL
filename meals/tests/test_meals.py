@@ -74,3 +74,38 @@ class MealViewTest(TestCase):
     #     '''assert view is rendered with our templates'''
     #     for template_name in ['foodlust/base.html', 'meals/meal.html']:
     #         self.assertTemplateUsed(self.response, template_name, count=1)   
+
+
+class FindPageTest(TestCase):
+    '''Test to see if views will return a 200 status code.'''
+    def test_meals_page_exists(self):
+        """assert that the response for the meals url is 200"""
+        response = self.client.get('/meals/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_meal_upload_page_exists(self):
+        """assert that the response for the homepage url is 200"""
+        response = self.client.get('/meals/upload/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_meal_detail_page_exists(self):
+        """assert that the response for the detail meal view url is 200"""
+        meal = MealFactory()
+        meal_id = meal.pk
+        path = '/meals/' + str(meal_id)
+        response = self.client.get(path)
+        self.assertEqual(response.status_code, 200)
+
+    def test_meals_by_rating_page_exists(self):
+        """assert that the response for the meals by rating url is 200"""
+        path = '/meals/by_rating/'
+        response = self.client.get(path)
+        self.assertEqual(response.status_code, 200)
+
+    def test_meals_by_user_page_exists(self):
+        """assert that the response for the meals by user url is 200"""
+        user = UserFactory()
+        username =user.username
+        path = '/meals/' + username + '/'
+        response = self.client.get(path)
+        self.assertEqual(response.status_code, 200)
