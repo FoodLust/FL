@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
-from .models import Meal, Rating, RatingManager
+from .models import Meal, Rating, RatingManager, Comment
 from members.models import Member
 
 
@@ -29,6 +29,11 @@ class MealDetailView(DetailView):
     template_name = 'meals/meal_detail.html'
     model = Meal
 
+    def get_context_data(self, **kwargs):
+        context_data = super(MealDetailView, self).get_context_data(**kwargs)
+        qs = Comment.objects.filter(meal_id=context_data['meal'].id)
+        context_data['comments'] = qs
+        return context_data
 
 class MealListView(ListView):
     template_name = 'meals/meals.html'
@@ -39,7 +44,6 @@ class MealListView(ListView):
     def get_context_data(self, **kwargs):
         context_data = super(MealListView, self).get_context_data(**kwargs)
         context_data['heading'] = 'Newest meals'
-        # import pdb;pdb.set_trace()
         return context_data
 
 
@@ -133,7 +137,6 @@ def meal_disliked(request, meal_pk):
 def follow(request, usertofollow):
     to_follow = Member.objects.get(user__username=usertofollow)
     user = Member.objects.get(user=request.user)
-    # import pdb; pdb.set_trace()
     user.following.add(to_follow)
     user.save()
     return redirect('meals_by_user', username=usertofollow)
