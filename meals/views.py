@@ -8,6 +8,7 @@ from .models import Meal, Rating, RatingManager
 from members.models import Member
 
 
+@method_decorator(login_required, name='dispatch')
 class UploadMealView(CreateView):
     template_name = 'meals/uploads_meal.html'
     model = Meal
