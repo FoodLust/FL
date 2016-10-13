@@ -1,9 +1,13 @@
 {% extends 'foodlust/base.html' %}
 {% block body %}
 <h1>{{ heading }}</h1>
+{% if not object_list %}
+    <h2>No meals to display</h2>
+{% endif %}
 
-{% if to_follow %}
-    <a href ="{% url 'follow_user' to_follow %}">Follow</a>
+
+{% if to_follow and request.user.username != to_follow %}
+    <a class="btn btn-default" href ="{% url 'follow_user' to_follow %}">Follow {{to_follow}}</a>
 {% endif %}
 
 {% for meal in object_list %}
