@@ -1,4 +1,9 @@
 {% extends 'foodlust/base.html' %}
+{% load static %}
+{% block component_css %}
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+{% endblock %}
+
 {% block body %}
 <h1>Top rated meals</h1>
 
@@ -29,4 +34,3 @@
     </div>
 {% endfor %}
 {% endblock %}
-
