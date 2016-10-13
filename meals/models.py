@@ -56,3 +56,10 @@ class Rating(models.Model):
 
     def __str__(self):
         return '{} - {} - {}'.format(self.meal.title, self.member.username, self.like)
+
+
+class Comment(models.Model):
+    """Model for a comment"""
+    meal = models.ForeignKey('Meal', related_name='comment')
+    message = models.TextField()
+    
