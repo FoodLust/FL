@@ -38,6 +38,7 @@ class MealListView(ListView):
     def get_context_data(self, **kwargs):
         context_data = super(MealListView, self).get_context_data(**kwargs)
         context_data['heading'] = 'Newest meals'
+        # import pdb;pdb.set_trace()
         return context_data
 
 
