@@ -19,7 +19,7 @@ from django.conf import settings
 from foodlust.views import home, about
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from members.views import member_view
+from members.views import member_view, EditMemberView
 
 
 urlpatterns = [
@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^meals/', include('meals.urls')),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^about/', about, name='about'),
-    url(r'^member/', member_view, name='member')
+    url(r'^member/$', member_view, name='member'),
 ]
 
 

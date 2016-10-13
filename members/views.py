@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.views.generic import UpdateView
+from .models import Member
+from django.contrib.auth.models import User
 
 @login_required
 def member_view(request):
@@ -12,3 +16,19 @@ def member_view(request):
         'email': request.user.email,
         'meals': all_meals
     })
+
+@login_required
+class EditMemberView(UpdateView):
+    """View for editing member info."""
+    template_name = 'edit_member.html'
+    model = User
+    fields = [
+        'username',
+        'first_name',
+        'last_name',
+        'email',
+    ]
+    success_url = reverse_lazy('member')
+
+    def get_object(self):
+        return self.request.user
