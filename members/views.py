@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from .models import Member
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 @login_required
 def member_view(request):
@@ -17,18 +18,25 @@ def member_view(request):
         'meals': all_meals
     })
 
-@login_required
-class EditMemberView(UpdateView):
-    """View for editing member info."""
-    template_name = 'edit_member.html'
-    model = User
-    fields = [
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-    ]
-    success_url = reverse_lazy('member')
 
-    def get_object(self):
-        return self.request.user
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username', 
+            'first_name', 
+            'last_name',
+            'email',
+            ]
+
+
+@login_required
+def edit_member_view(request):
+    """Edit member view."""
+    template_name = 'edit_member.html'
+    user = get_object_or_404(User)
+    form = UserForm(request.POST or None, instance=user)
+    if form.is_valid():
+        form.save()
+        return redirect('member')
+    return render(request, template_name, {'form':form})

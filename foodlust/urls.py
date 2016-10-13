@@ -19,7 +19,7 @@ from django.conf import settings
 from foodlust.views import home, about, home_redirect
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from members.views import member_view, EditMemberView
+from members.views import member_view, edit_member_view
 
 
 urlpatterns = [
@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^about/', about, name='about'),
     url(r'^accounts/profile/', home_redirect),
     url(r'^member/$', member_view, name='member'),
+    url(r'^member/edit$', edit_member_view, name='member_edit'),
 ]
 
 
