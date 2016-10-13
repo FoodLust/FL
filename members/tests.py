@@ -93,10 +93,16 @@ class TestMemberView(TestCase):
         response = self.client.get(reverse('member'))
         self.assertContains(response, self.meal.id)
 
-class TestEditMemberView(Testcase):
+class TestEditMemberView(TestCase):
     """Testcase for edit member info."""
 
     def setUp(self):
         """Setup for testcase."""
         self.user = User(username="mike", first_name='mike')
         self.user.save()
+        self.client.force_login(self.user)
+        self.response = self.client.get(reverse('member_edit'))
+
+    def test_memebr_edit_status_code_authd(self):
+        """Test status code 200 for authenticated user for edit."""
+        self.assertEqual(self.response.status_code, 200)
