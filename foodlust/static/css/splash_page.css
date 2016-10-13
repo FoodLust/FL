@@ -25,6 +25,11 @@ header,
     color: #fff;
 }
 
+.navbar-bottom {
+    position: fixed!important;
+    bottom: 0;
+}
+
 .view {
     background: url("/static/img/homepage_background.jpeg")no-repeat center center fixed;
     -webkit-background-size: cover;
