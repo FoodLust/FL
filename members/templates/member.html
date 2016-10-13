@@ -1,5 +1,6 @@
 {% extends 'foodlust/base.html' %}
 {% block body %}
+
 <h1>Profile</h1>
 
 User: {{ username }}</br>
@@ -10,4 +11,5 @@ My Meals:</br>
 {% for meal in meals %}
 <a href="{% url 'meal' pk=meal.id %}">{{ meal.title }}</a></br>
 {% endfor %}
+<button><a href="{% url 'member_edit' %}">Edit</a></button>
 {% endblock %}

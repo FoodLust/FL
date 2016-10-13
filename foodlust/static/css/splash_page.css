@@ -15,6 +15,22 @@ header,
     background-color: #2E2E2E;
 }
 
+/*Option 1 no footer on homepage*/
+/*#content {
+    padding-bottom: 0;
+}
+
+.navbar-bottom {
+    display: none;
+}*/
+
+/*Option 2 fixed footer on hompage*/
+.navbar-bottom {
+    position: fixed;
+    bottom: 0;
+}
+
+
 @media only screen and (max-width: 768px) {
     .navbar {
         background-color: #2E2E2E;
@@ -26,7 +42,8 @@ header,
 }
 
 .view {
-    background: url("http://127.0.0.1:8000/media/j/pexels-photo-134686.jpeg")no-repeat center center fixed;
+    /*background: url("http://127.0.0.1:8000/foodlust/static/img/hompage_background.jpeg")no-repeat center center fixed;*/
+    background: url("http://127.0.0.1:8000/media/james1234/hompage_background.jpeg")no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

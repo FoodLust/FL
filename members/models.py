@@ -32,6 +32,14 @@ class Member(models.Model):
         unique=True
     )
 
+    following = models.ManyToManyField('self',
+                                       related_name='followers',
+                                       related_query_name='followers',
+                                       null=True, blank=True,
+                                       default='',
+                                       symmetrical=False
+                                       )
+
     def __str__(self):
         fn = self.user.get_full_name().strip() or self.user.get_username()
         return '{}'.format(fn)

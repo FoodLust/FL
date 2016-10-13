@@ -106,3 +106,7 @@ class TestEditMemberView(TestCase):
     def test_memebr_edit_status_code_authd(self):
         """Test status code 200 for authenticated user for edit."""
         self.assertEqual(self.response.status_code, 200)
+
+    def test_member_edit_contains_edit(self):
+        """Test edit page contains edit profile."""
+        self.assertContains(self.response, 'Edit')

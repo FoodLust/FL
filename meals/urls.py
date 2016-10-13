@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from .views import UploadMealView, MealDetailView, MealListView, meal_liked, \
-    meal_disliked, MealListViewTopRated, MealListViewByUser, MealListMyMeals
+    meal_disliked, MealListViewTopRated, MealListViewByUser, MealListMyMeals, \
+    follow
 
 
 urlpatterns = [
@@ -38,6 +39,12 @@ urlpatterns = [
         MealListMyMeals.as_view(),
         name='my_meals'
         ),
+
+    url(r'^follow/(?P<usertofollow>[A-Za-z0-9-@._+]*)/$',
+        follow,
+        name='follow_user'
+        ),
+
     # This should go last becasue it has an inclusive regular expression
     url(r'^(?P<username>[A-Za-z0-9-@._+]*)/$',
         MealListViewByUser.as_view(),
