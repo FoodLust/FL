@@ -18,17 +18,6 @@ def member_view(request):
     })
 
 @login_required
-class EditMemberView(UpdateView):
-    """View for editing member info."""
-    template_name = 'edit_member.html'
-    model = User
-    fields = [
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-    ]
-    success_url = reverse_lazy('member')
-
-    def get_object(self):
-        return self.request.user
+def member_edit(request):
+    """Edit the member view."""
+    return render(request, 'edit_member.html', {})
