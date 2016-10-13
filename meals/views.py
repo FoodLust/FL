@@ -70,7 +70,8 @@ class MealListViewByUser(ListView):
     def get_context_data(self, **kwargs):
         context_data = super(MealListViewByUser, self).get_context_data(**kwargs)
         username = self.request.path.split('/')[2]
-        context_data['heading'] = 'Meals by{}'.format(username)
+        context_data['heading'] = 'Meals by {}'.format(username)
+        context_data['to_follow'] = username
         return context_data
 
 
@@ -126,3 +127,14 @@ def meal_disliked(request, meal_pk):
     rating.like = like
     rating.save()
     return redirect('meals')
+
+
+@login_required
+def follow(request, usertofollow):
+    to_follow = Member.objects.get(user__username=usertofollow)
+    user = Member.objects.get(user=request.user)
+    # import pdb; pdb.set_trace()
+    user.following.add(to_follow)
+    user.save()
+    return redirect('meals_by_user', username=usertofollow)
+
