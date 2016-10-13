@@ -92,3 +92,11 @@ class TestMemberView(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse('member'))
         self.assertContains(response, self.meal.id)
+
+class TestEditMemberView(Testcase):
+    """Testcase for edit member info."""
+
+    def setUp(self):
+        """Setup for testcase."""
+        self.user = User(username="mike", first_name='mike')
+        self.user.save()
