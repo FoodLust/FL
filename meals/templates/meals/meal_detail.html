@@ -1,9 +1,4 @@
 {% extends 'foodlust/base.html' %}
-{% load static %}
-{% block component_css %}
-<link rel="stylesheet" href="{% static '/css/style.css' %}">
-{% endblock %}
-
 {% block body %}
 <h1></h1>
 <div class="meal-rectangle-detail">
@@ -13,6 +8,7 @@
           <img class="meal-img-detail" src="{{ object.photo.url }}">
         </div>
         <p>Member: {{ object.member.username }}</p>
+        <p>Upload date: {{ object.date_created|date:'d M Y' }}</p>
         <p>Rating: {{ object.percent }}</p>
         <p><a href="{{ object.pk }}/liked/">Like <i class="fa fa-lg fa-thumbs-o-up pull-xs-left"></i></a><a class="pull-xs-right" href="{{ object.pk }}/disliked">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
     </div>

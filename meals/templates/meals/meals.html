@@ -1,9 +1,4 @@
 {% extends 'foodlust/base.html' %}
-{% load static %}
-{% block component_css %}
-<link rel="stylesheet" href="{% static '/css/style.css' %}">
-{% endblock %}
-
 {% block body %}
 <h1>{{ heading }}</h1>
 
@@ -36,7 +31,6 @@
         {% endif %}
     </div>
 {% endfor %}
-{% endblock %}
     {% if is_paginated %}
         <div class="pagination">
             <span class="page-links">
