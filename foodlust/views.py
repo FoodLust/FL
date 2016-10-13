@@ -13,7 +13,7 @@ def home(request):
 
 def about(request):
     """Create an about view."""
-    return render(request, 'foodlust/about.html')
+    return render(request, 'foodlust/about_us.html')
 
 
 def home_redirect(request):
