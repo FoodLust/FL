@@ -20,13 +20,14 @@
             <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
             <span style="color:grey" class="pull-xs-right">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></span></p>
         {% endif %}
-       {% if comments %}
+        {% if comments %}
             <hr>
             <h2>Comments</h2>
             {% for comment in comments %}
             <a href="{% url 'meals_by_user' username=comment.user.username %}">{{ comment.user.username }}</a> says:<br>{{ comment.message }}</p>
             {% endfor %}
         {% endif %}
+
     </div>
 </div>
 {% endblock %}
