@@ -31,10 +31,10 @@ class Meal(models.Model):
         total = float(total_rated_query.count())
         liked = float(total_rated_query.filter(like=True).count())
         try:
-            percentage = int(liked / total)
+            percentage = liked / total
         except ZeroDivisionError:
             return -1
-        return percentage * 100
+        return int(percentage * 100)
 
 
 class RatingManager(models.Manager):
