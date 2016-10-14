@@ -1,7 +1,7 @@
 import factory
 from django.contrib.auth.models import User
 from meals.models import Meal, Rating
-from member.models import Member
+from members.models import Member
 
 
 class UserFactory(factory.django.DjangoModelFactory):
