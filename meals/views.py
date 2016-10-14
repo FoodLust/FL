@@ -6,7 +6,9 @@ from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView
 from .models import Meal, Rating, Comment
 from members.models import Member
+from django.http import HttpResponse
 from django.forms import ModelForm
+
 
 
 def get_meals_user_liked(username):
@@ -192,13 +194,16 @@ def meal_liked(request, meal_pk):
 
     try:
         rating = Rating.objects.get(member=member, meal=meal)
+        r_percent = meal.percent()
     except ObjectDoesNotExist:
         Rating.objects.create_rating(member, meal, like)
-        return redirect(request.META['HTTP_REFERER'])
+        r_percent = meal.percent()
+        return HttpResponse(r_percent)
 
     rating.like = like
     rating.save()
-    return redirect(request.META['HTTP_REFERER'])
+    r_percent = meal.percent()
+    return HttpResponse(r_percent)
 
 
 @login_required
@@ -211,13 +216,15 @@ def meal_disliked(request, meal_pk):
 
     try:
         rating = Rating.objects.get(member=member, meal=meal)
+        r_percent = meal.percent()
     except ObjectDoesNotExist:
         Rating.objects.create_rating(member, meal, like)
-        return redirect(request.META['HTTP_REFERER'])
+        r_percent = meal.percent()
 
     rating.like = like
     rating.save()
-    return redirect(request.META['HTTP_REFERER'])
+    r_percent = meal.percent()
+    return HttpResponse(r_percent)
 
 
 @login_required
