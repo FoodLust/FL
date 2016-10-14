@@ -53,7 +53,6 @@ class MealUploadTestCase(TestCase):
 
     def test_form_present_in_context(self):
         """test there is a form on the add meal"""
-        # import pdb; pdb.set_trace()
         self.client.force_login(self.user)
         self.assertIn('form', self.response.context)
 
@@ -68,11 +67,10 @@ class MealUploadTestCase(TestCase):
 
     def test_upload_view_returns_ok_status(self):
         '''test that the response is 200'''
-        # import pdb; pdb.set_trace()
         self.client.logout()
         self.assertEquals(self.response.status_code, 200)
 
-
+# TODO Need to fix testcase. 
 # class MealViewTest(TestCase):
 #     def setUp(self):
 #         self.meal = MealFactory()
@@ -98,10 +96,6 @@ class CommentTestCase(TestCase):
         self.comment.meal = self.meal
         self.comment.user = self.user
         self.comment.save()
-
-
-    def tearDown(self):
-        pass
 
     def test_comment_has_message(self):
         """Test comment model has attribute message."""
