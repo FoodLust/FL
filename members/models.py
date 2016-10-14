@@ -35,7 +35,7 @@ class Member(models.Model):
     following = models.ManyToManyField('self',
                                        related_name='followers',
                                        related_query_name='followers',
-                                       null=True, blank=True,
+                                       blank=True,
                                        default='',
                                        symmetrical=False
                                        )
