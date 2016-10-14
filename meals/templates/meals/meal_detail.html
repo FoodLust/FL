@@ -25,6 +25,10 @@
         {% for comment in comments %}
         <p><strong>{{ comment.user.username }}</strong> says: {{ comment.message }}</p>
         {% endfor %}
+        <form action ='' method="POST">{% csrf_token %}
+          {{ form.as_p }}
+          <input class="btn btn-default" type="submit" value="Add Comment">
+        </form>
     </div>
 </div>
 {% endblock %}
