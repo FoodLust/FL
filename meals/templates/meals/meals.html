@@ -5,11 +5,12 @@
     <h2>No meals to display</h2>
 {% endif %}
 
-
-    {% if to_follow in followed %}
-        <a class="btn btn-default" href ="{% url 'stop_follow_user' to_follow %}">Unfollow {{to_follow}}</a>
-    {% else %}
-        <a class="btn btn-default" href ="{% url 'follow_user' to_follow %}">Follow {{to_follow}}</a>
+    {% if to_follow and to_follow != request.user.username %}
+        {% if to_follow in followed %}
+            <a class="btn btn-default" href ="{% url 'stop_follow_user' to_follow %}">Unfollow {{to_follow}}</a>
+        {% else %}
+            <a class="btn btn-default" href ="{% url 'follow_user' to_follow %}">Follow {{to_follow}}</a>
+        {% endif %}
     {% endif %}
 
 {% for meal in object_list %}
