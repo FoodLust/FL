@@ -44,8 +44,8 @@
                       <a style="color:gray" class="pull-xs-right disliked-gray">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
                 {% else %}
                     <p class='selector'>
-                      <a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="pull-xs-left liked-open">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
-                      <a class="pull-xs-right disliked-open" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
+                      <a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="pull-xs-left liked-blue">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a class="pull-xs-right disliked-blue" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
                     </p>
                 {% endif %}
             </div>
