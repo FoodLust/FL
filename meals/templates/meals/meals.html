@@ -6,7 +6,12 @@
 {% endif %}
 
 {% if to_follow and request.user.username != to_follow %}
+    {% if to_follow in follow %}
+        balls
+    {% endif %}
     <a class="btn btn-default" href ="{% url 'follow_user' to_follow %}">Follow {{to_follow}}</a>
+    <a class="btn btn-default" href ="{% url 'stop_follow_user' to_follow %}">Unfollow {{to_follow}}</a>
+    {{ followed }}
 {% endif %}
 
 {% for meal in object_list %}

@@ -24,6 +24,14 @@ def get_meals_user_disliked(username):
     return meals_user_disliked
 
 
+def get_people_followed(member):
+    followed = []
+    # members_followed = Member.objects.filter(user_id=member.following.user_id)
+    for member in member.following.values():
+        followed.append(member.username)
+    return followed
+
+
 @method_decorator(login_required, name='dispatch')
 class UploadMealView(CreateView):
     template_name = 'meals/uploads_meal.html'
@@ -52,7 +60,6 @@ class MealDetailView(DetailView):
         context_data['user_rating'] = user_rating
         qs = Comment.objects.filter(meal_id=context_data['meal'].id)
         context_data['comments'] = qs
-        # import pdb; pdb.set_trace()
         return context_data
 
 
@@ -103,6 +110,7 @@ class MealListViewByUser(ListView):
         meals_by_username = self.request.path.split('/')[2]
         context_data['heading'] = 'Meals by {}'.format(meals_by_username)
         context_data['to_follow'] = meals_by_username
+        context_data['followed'] = get_people_followed(self.request.user.member)
         username = self.request.user.username
         context_data['meals_user_liked'] = get_meals_user_liked(username)
         context_data['meals_user_disliked'] = get_meals_user_disliked(username)
@@ -141,7 +149,7 @@ def meal_liked(request, meal_pk):
         rating = Rating.objects.get(member=member, meal=meal)
     except ObjectDoesNotExist:
         Rating.objects.create_rating(member, meal, like)
-        return redirect('meals')
+        return redirect(request.META['HTTP_REFERER'])
 
     rating.like = like
     rating.save()
@@ -159,7 +167,7 @@ def meal_disliked(request, meal_pk):
         rating = Rating.objects.get(member=member, meal=meal)
     except ObjectDoesNotExist:
         Rating.objects.create_rating(member, meal, like)
-        return redirect('meals')
+        return redirect(request.META['HTTP_REFERER'])
 
     rating.like = like
     rating.save()
@@ -172,7 +180,7 @@ def follow(request, usertofollow):
     user = Member.objects.get(user=request.user)
     user.following.add(to_follow)
     user.save()
-    return redirect('meals_by_user', username=usertofollow)
+    return redirect(request.META['HTTP_REFERER'])
 
 
 @login_required
@@ -182,5 +190,5 @@ def unfollow(request, usertostopfollow):
     # import pdb; pdb.set_trace()
     user.following.remove(stop_follow)
     user.save()
-    return redirect('member')
+    return redirect(request.META['HTTP_REFERER'])
 
