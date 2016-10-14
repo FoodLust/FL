@@ -30,13 +30,19 @@
                 {% endif %}
 
                 {% if meal in meals_user_liked %}
-                    <p><span style="color:grey"> Like <i class="fa fa-lg fa-thumbs-o-up"></i></span>
-                    <a class="pull-xs-right disliked" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                    <p class='selector'>
+                      <a style="color:gray" class="liked-gray"> Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a class="pull-xs-right disliked-blue" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
+                    </p>
                 {% elif meal in meals_user_disliked %}
-                    <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="liked">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
-                    <span style="color:grey" class="pull-xs-right">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></span></p>
+                    <p class='selector'>
+                      <a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="liked-blue">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a style="color:gray" class="pull-xs-right disliked-gray">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
                 {% else %}
-                    <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="liked">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="pull-xs-right disliked" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                    <p class='selector'>
+                      <a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="pull-xs-left liked-open">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a class="pull-xs-right disliked-open" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
+                    </p>
                 {% endif %}
             </div>
         </div>
