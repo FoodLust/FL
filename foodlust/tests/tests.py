@@ -30,12 +30,12 @@ class HomeViewTestCase(TestCase):
 
     def test_homeview_has_sign_up_link(self):
         '''Test to see if the homepage has register button.'''
-        expected = b'accounts/register/'
+        expected = 'accounts/register/'
         self.assertContains(self.response, expected)
 
     def test_homeview_has_log_in_link(self):
         '''Test to see if the homepage has login button.'''
-        expected = b'accounts/login/'
+        expected = 'accounts/login/'
         self.assertContains(self.response, expected)
 
     def test_homeview_has_meals_link(self):
@@ -43,32 +43,32 @@ class HomeViewTestCase(TestCase):
         Test to see if the homepage has link to the meals page.
         Need trailing quote mark to distigush this from other links.
         '''
-        expected = b'meals/"'
+        expected = 'meals/"'
         self.assertContains(self.response, expected)
 
     def test_homeview_has_meals_top_rated_link(self):
         '''Test to see if the homepage has link to the top rated meals page.'''
-        expected = b'meals/top_rated'
+        expected = 'meals/top_rated'
         self.assertContains(self.response, expected)
 
     def test_homeview_has_about_link(self):
         '''Test to see if the homepage has link to the about page.'''
-        expected = b'about/'
+        expected = 'about/'
         self.assertContains(self.response, expected)
 
     def test_homeview_has_link_to_github(self):
         '''Test to see if the homepage has link to github.'''
-        expected = b'https://github.com/FoodLust/FL'
+        expected = 'https://github.com/FoodLust/FL'
         self.assertContains(self.response, expected)
 
     def test_homeview_has_food_lust_logo(self):
         '''Test to see if the homepage has food lust logo.'''
-        expected = b'/static/img/logo.png'
+        expected = '/static/img/logo.png'
         self.assertContains(self.response, expected)
 
     def test_homeview_has_logout(self):
         '''Test to see if the homepage has a logout for just logged in users.'''
-        expected = b'logout/'
+        expected = 'logout/'
         self.assertNotContains(self.response, expected)
         self.user = UserFactory()
         self.client.force_login(self.user)
@@ -124,7 +124,7 @@ class AboutViewTest(TestCase):
 
     def test_about_page_has_names(self):
         '''Test to see if the homepage has register button.'''
-        names = [b'James Canning', b'Zach Rickert', b'Mike Harrison', 'Jeff Torres']
+        names = ['James Canning', 'Zach Rickert', 'Mike Harrison', 'Jeff Torres']
         for name in names:
             self.assertContains(self.response, name)
 
