@@ -24,7 +24,8 @@
             <hr>
             <h2>Comments</h2>
             {% for comment in comments %}
-            <a href="{% url 'meals_by_user' username=comment.user.username %}">{{ comment.user.username }}</a> says:<br>{{ comment.message }}</p>
+            On {{ comment.date_created|date:'d M Y' }} 
+            <a href="{% url 'meals_by_user' username=comment.user.username %}">{{ comment.user.username }}</a> said:<br>{{ comment.message }}</p>
             {% endfor %}
         {% endif %}
         <hr>
