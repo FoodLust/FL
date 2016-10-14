@@ -70,20 +70,29 @@ class MealUploadTestCase(TestCase):
         self.client.logout()
         self.assertEquals(self.response.status_code, 200)
 
-# TODO Need to fix testcase. 
-# class MealViewTest(TestCase):
-#     def setUp(self):
-#         self.meal = MealFactory()
-#         self.url = reverse('meal', kwargs={
-#                            'username': self.meal.member.username,
-#                            'pk': str(self.meal.member.pk)}
-#                            )
-#         self.response = self.client.get(self.url)
+class MealViewTest(TestCase):
+    def setUp(self):
+        self.user = User(username='mike')
+        self.user.save()
+        self.meal = MealFactory()
+        self.url = reverse('meal', kwargs={
+                           'pk': str(self.meal.pk)}
+                           )
+        self.client.force_login(self.user)
+        self.response = self.client.get(self.url)
+        
 
-#     def test_correct_template(self):
-#         '''assert view is rendered with our templates'''
-#         for template_name in ['foodlust/base.html', 'meals/meal.html']:
-#             self.assertTemplateUsed(self.response, template_name, count=1)
+    def test_status_code(self):
+        """Test status code for meal detail view."""
+        self.assertEqual(self.response.status_code, 200)
+    
+
+
+
+    # def test_correct_template(self):
+    #     '''assert view is rendered with our templates'''
+    #     for template_name in ['foodlust/base.html', 'meals/meal.html']:
+    #         self.assertTemplateUsed(self.response, template_name, count=1)
 
 
 class CommentTestCase(TestCase):
