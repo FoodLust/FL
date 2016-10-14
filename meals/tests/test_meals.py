@@ -70,20 +70,43 @@ class MealUploadTestCase(TestCase):
         self.client.logout()
         self.assertEquals(self.response.status_code, 200)
 
-# TODO Need to fix testcase. 
-# class MealViewTest(TestCase):
-#     def setUp(self):
-#         self.meal = MealFactory()
-#         self.url = reverse('meal', kwargs={
-#                            'username': self.meal.member.username,
-#                            'pk': str(self.meal.member.pk)}
-#                            )
-#         self.response = self.client.get(self.url)
+class MealViewTest(TestCase):
+    """Testcase for Meal View."""
+    def setUp(self):
+        """Setup for Meal view."""
+        self.user = User(username='mike')
+        self.user.save()
+        self.meal = MealFactory()
+        self.url = reverse('meal', kwargs={
+                           'pk': str(self.meal.pk)}
+                           )
+        self.client.force_login(self.user)
+        self.comment = Comment()
+        self.comment.meal = self.meal
+        self.comment.user = self.user
+        self.comment.message = "A new message."
+        self.comment.save()
+        self.response = self.client.get(self.url)
 
-#     def test_correct_template(self):
-#         '''assert view is rendered with our templates'''
-#         for template_name in ['foodlust/base.html', 'meals/meal.html']:
-#             self.assertTemplateUsed(self.response, template_name, count=1)
+    def test_status_code(self):
+        """Test status code for meal detail view."""
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_meal_detail_view_template(self):
+        """Test template of meal detail view."""
+        self.assertContains(self.response, 'Message:')
+
+    def test_meal_view_has_meal_title(self):
+        """Test view has meal and title."""
+        self.assertContains(self.response, self.meal.title)
+
+    def test_meal_view_has_not_yet_rated(self):
+        """Test template contains not yet rated."""
+        self.assertContains(self.response, 'Not yet rated')
+
+    def test_meal_view_comment(self):
+        """Test meal view has a comment."""
+        self.assertContains(self.response, "A new message.")
 
 
 class CommentTestCase(TestCase):
@@ -115,5 +138,3 @@ class CommentTestCase(TestCase):
         expected_date = datetime.utcnow().strftime(format_string)
         date = self.comment.date_created.strftime(format_string)
         self.assertEqual(expected_date, date)
-
-
