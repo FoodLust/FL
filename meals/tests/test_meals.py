@@ -87,7 +87,6 @@ class MealViewTest(TestCase):
         self.comment.message = "A new message."
         self.comment.save()
         self.response = self.client.get(self.url)
-        
 
     def test_status_code(self):
         """Test status code for meal detail view."""
@@ -108,6 +107,7 @@ class MealViewTest(TestCase):
     def test_meal_view_comment(self):
         """Test meal view has a comment."""
         self.assertContains(self.response, "A new message.")
+
 
 class CommentTestCase(TestCase):
     """Test module for the comments model."""
@@ -138,5 +138,3 @@ class CommentTestCase(TestCase):
         expected_date = datetime.utcnow().strftime(format_string)
         date = self.comment.date_created.strftime(format_string)
         self.assertEqual(expected_date, date)
-
-
