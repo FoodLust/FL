@@ -95,7 +95,10 @@ class MealViewTest(TestCase):
     def test_meal_view_has_meal_title(self):
         """Test view has meal and title."""
         self.assertContains(self.response, self.meal.title)
-    
+
+    def test_meal_view_has_not_yet_rated(self):
+        """Test template contains not yet rated."""
+        self.assertContains(self.response, 'Not yet rated')
 
 class CommentTestCase(TestCase):
     """Test module for the comments model."""
