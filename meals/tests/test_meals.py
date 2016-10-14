@@ -95,7 +95,7 @@ class MealViewTest(TestCase):
 
     def test_meal_detail_view_template(self):
         """Test template of meal detail view."""
-        self.assertContains(self.response, '<p>Comments:</p>')
+        self.assertContains(self.response, 'Message:')
 
     def test_meal_view_has_meal_title(self):
         """Test view has meal and title."""
