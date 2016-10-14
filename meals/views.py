@@ -189,4 +189,14 @@ def follow(request, usertofollow):
     user = Member.objects.get(user=request.user)
     user.following.add(to_follow)
     user.save()
-    return redirect('meals_by_user', username=usertofollow)
+    return redirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def unfollow(request, usertostopfollow):
+    """Unfollows a user by the current user."""
+    stop_follow = Member.objects.get(user__username=usertostopfollow)
+    user = Member.objects.get(user=request.user)
+    user.following.remove(stop_follow)
+    user.save()
+    return redirect(request.META['HTTP_REFERER'])
