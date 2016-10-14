@@ -1,16 +1,22 @@
 # Food Lust
 ![Food Lust Logo](https://avatars2.githubusercontent.com/u/22508428?v=3&s=200)
 
+http://foodlust.org/
+
 ## Introduction
 Food Lust is a social site for food lovers.
 
 ## Basic Functionality
-* Guesses will be able to sign up for the app.
-* Once logged in users will be able to:
-    * upload photos
-    * like others' photos
+* Users can brows meals by date, top rated or by user. 
+* Users can sign up for the app.
+* Once logged in users can:
+    * upload meals
+    * like and dislike others' meals
+    * Follow and unfollow other users
+    * Visit their profile to see their account info, list of meals and list of followed and following users.
 
-## Dependancies
+## Known issues
+If a user signs up and clicks on the confirmation link in the email it works. If they click on the same link a second time they might get a 500 error. Even if they get a 500 error the sign up still worked and the user can log in.
 
 ##License
 MIT License
