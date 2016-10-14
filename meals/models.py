@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 
 
-# Create your models here.
-
 def upload_directory_path(instance, filename):
     return '{}/{}'.format(
         instance.member.username,
@@ -39,7 +37,6 @@ class Meal(models.Model):
 class RatingManager(models.Manager):
     def create_rating(self, member, meal, like):
         rating = self.create(member=member, meal=meal, like=like)
-        # do something with the book
         return rating
 
 
@@ -56,3 +53,15 @@ class Rating(models.Model):
 
     def __str__(self):
         return '{} - {} - {}'.format(self.meal.title, self.member.username, self.like)
+
+
+class Comment(models.Model):
+    """Model for a comment"""
+    meal = models.ForeignKey('Meal', related_name='comment')
+    message = models.TextField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               related_name='comment')
+    date_created = models.DateTimeField('date created', auto_now_add=True)
+
+
+

@@ -25,8 +25,13 @@ header,
     color: #fff;
 }
 
+.navbar-bottom {
+    position: fixed!important;
+    bottom: 0;
+}
+
 .view {
-    background: url("http://127.0.0.1:8000/media/j/pexels-photo-134686.jpeg")no-repeat center center fixed;
+    background: url("/static/img/homepage_background.jpeg")no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

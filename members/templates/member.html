@@ -1,13 +1,36 @@
 {% extends 'foodlust/base.html' %}
 {% block body %}
-<h1>Profile</h1>
 
-User: {{ username }}</br>
-First Name: {{ first_name }}</br>
-Last Name: {{ last_name }}</br>
-Email: {{ email }}</br>
-My Meals:</br>
-{% for meal in meals %}
-<a href="{% url 'meal' pk=meal.id %}">{{ meal.title }}</a></br>
-{% endfor %}
+<h1>Profile</h1>
+<div class='row'>
+    <div class ='col-md-4'>
+    <h2>Info</h2>
+        <p><span class='bold_profile'>User:</span></br> {{ username }}</p>
+        <p><span class='bold_profile'>First Name:</span></br> {{ first_name }}</p>
+        <p><span class='bold_profile'>Last Name:</span></br> {{ last_name }}</p>
+        <p><span class='bold_profile'>Email:</span></br> {{ email }}</p>
+    </div>
+    <div class ='col-md-4'>    
+        <h2>My Meals</H2>
+        {% for meal in meals %}
+        <a href="{% url 'meal' pk=meal.id %}">{{ meal.title }}</a></br>
+        {% endfor %}
+    </div>
+    <div class ='col-md-4'>
+        <h2>Following</h2>
+        {% for member in follows %}
+        <a href="{% url 'meals_by_user' username=member %}">{{ member }}</a></br>
+            
+        {% endfor %}
+        <p>
+        <h2>Followers</h2>
+        {% for member in followers %}
+        <a href="{% url 'meals_by_user' username=member %}">{{ member }}</a></br>
+            
+        {% endfor %}
+    </div>
+
+</div>
+<button class='btn btn-default'><a href="{% url 'member_edit' %}">Edit</a></button>
+
 {% endblock %}

@@ -22,7 +22,7 @@ h1 {
     border-style: solid;
     border-width: 1px;
     border-color: #2bbbad;
-    width: 40rem;
+    width: auto;
     background-color: #f1f1f1;
 }
 
@@ -56,9 +56,12 @@ h1 {
     color: #373a3c!important;
 }
 
-.page-footer {
-    /*margin-top: 5rem;*/
-    height: 3rem;
+.bold_profile {
+    font-weight: bold;
+}
+
+.navbar-bottom {
+    position: absolute;
     bottom: 0;
     width: 100%;
   }
