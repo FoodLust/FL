@@ -27,7 +27,11 @@
             <a href="{% url 'meals_by_user' username=comment.user.username %}">{{ comment.user.username }}</a> says:<br>{{ comment.message }}</p>
             {% endfor %}
         {% endif %}
-
+        <hr>
+        <form action ='' method="POST">{% csrf_token %}
+          {{ form.as_p }}
+          <input class="btn btn-default" type="submit" value="Add Comment">
+        </form>
     </div>
 </div>
 {% endblock %}
