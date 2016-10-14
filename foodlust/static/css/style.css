@@ -14,7 +14,7 @@ h1 {
 
 #content {
     padding-top: 1rem;
-    padding-bottom: 7rem;
+    padding-bottom: 6rem;
 }
 
 .meal-rectangle-detail {
@@ -65,3 +65,10 @@ h1 {
     bottom: 0;
     width: 100%;
   }
+
+@media only screen and (min-width : 992px) {
+.meal-rectangle-detail {
+    width: 40rem;
+}
+
+}

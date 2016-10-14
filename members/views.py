@@ -1,10 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
-from django.views.generic import UpdateView
-from .models import Member
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+
 
 @login_required
 def member_view(request):
@@ -23,14 +21,14 @@ def member_view(request):
 
 
 class UserForm(ModelForm):
+    """New user registration form"""
     class Meta:
         model = User
         fields = [
-            'username', 
-            'first_name', 
+            'username',
+            'first_name',
             'last_name',
-            'email',
-            ]
+            'email']
 
 
 @login_required
@@ -42,4 +40,4 @@ def edit_member_view(request):
     if form.is_valid():
         form.save()
         return redirect('member')
-    return render(request, template_name, {'form':form})
+    return render(request, template_name, {'form': form})

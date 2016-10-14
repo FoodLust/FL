@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from .views import UploadMealView, MealDetailView, MealListView, meal_liked, \
     meal_disliked, MealListViewTopRated, MealListViewByUser, MealListMyMeals, \
-    follow
+    follow, unfollow
 
 
 urlpatterns = [
@@ -43,6 +43,12 @@ urlpatterns = [
     url(r'^follow/(?P<usertofollow>[A-Za-z0-9-@._+]*)/$',
         follow,
         name='follow_user'
+        ),
+
+
+    url(r'^unfollow/(?P<usertostopfollow>[A-Za-z0-9-@._+]*)/$',
+        unfollow,
+        name='stop_follow_user'
         ),
 
     # This should go last becasue it has an inclusive regular expression
