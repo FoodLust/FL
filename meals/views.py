@@ -32,7 +32,6 @@ def get_people_followed(user_pk):
     followed_set = member[0].following.values()
     for mem in followed_set:
         followed.append(user_pk_to_username(mem['user_id']))
-    # import pdb; pdb.set_trace()
     return followed
 
 

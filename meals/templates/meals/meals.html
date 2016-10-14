@@ -12,9 +12,6 @@
         <a class="btn btn-default" href ="{% url 'follow_user' to_follow %}">Follow {{to_follow}}</a>
     {% endif %}
 
-    {{ followed }}
-    {{ to_follow }}
-
 {% for meal in object_list %}
     {% if forloop.counter0|divisibleby:3 %}
         <div class="row">
