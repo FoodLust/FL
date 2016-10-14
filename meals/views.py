@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView
 from .models import Meal, Rating, Comment
 from members.models import Member
+from django.forms import ModelForm
 
 
 def get_meals_user_liked(username):
@@ -26,12 +27,18 @@ def get_meals_user_disliked(username):
     return meals_user_disliked
 
 
-def get_people_followed(member):
+def get_people_followed(user_pk):
     followed = []
-    # members_followed = Member.objects.filter(user_id=member.following.user_id)
-    for member in member.following.values():
-        followed.append(member.username)
+    member = Member.objects.filter(pk=user_pk)
+    followed_set = member[0].following.values()
+    for mem in followed_set:
+        followed.append(user_pk_to_username(mem['user_id']))
     return followed
+
+
+def user_pk_to_username(user_pk):
+    username = Member.objects.filter(pk=user_pk)[0].user.username
+    return username
 
 
 @method_decorator(login_required, name='dispatch')
@@ -52,10 +59,29 @@ class UploadMealView(CreateView):
         return super(UploadMealView, self).form_valid(form)
 
 
-class MealDetailView(DetailView):
-    """Shows an indervidual meal with ratings and comments."""
+class CreateCommentForm(ModelForm):
+    """Form for commenting."""
+    class Meta(object):
+        model = Comment
+        fields = ['message']
+
+
+class MealDetailView(DetailView, CreateView):
+    """View for individual meals."""
     template_name = 'meals/meal_detail.html'
     model = Meal
+    form_class = CreateCommentForm
+
+    def get_success_url(self):
+        """Manaul success url."""
+        url = reverse('meal', kwargs=self.kwargs)
+        return url
+
+    def form_valid(self, form):
+        """Attach the user to the form."""
+        form.instance.user = self.request.user
+        form.instance.meal_id = self.request.path.split('/')[-1]
+        return super(MealDetailView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         """Add the users rating and comments to the context data."""
@@ -111,7 +137,7 @@ class MealListViewByUser(ListView):
     paginate_by = 24
 
     def get_queryset(self, **kwargs):
-        """Get meals by a user.""" 
+        """Get meals by a user."""
         username = self.request.path.split('/')[2]
         query = Meal.objects.filter(member__username=username)
         return query
@@ -122,8 +148,11 @@ class MealListViewByUser(ListView):
         meals_by_username = self.request.path.split('/')[2]
         context_data['heading'] = 'Meals by {}'.format(meals_by_username)
         context_data['to_follow'] = meals_by_username
-        context_data['followed'] = get_people_followed(self.request.user.member)
         username = self.request.user.username
+
+        user_pk = self.request.user.pk
+        context_data['followed'] = get_people_followed(user_pk)
+
         context_data['meals_user_liked'] = get_meals_user_liked(username)
         context_data['meals_user_disliked'] = get_meals_user_disliked(username)
         return context_data
