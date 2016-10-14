@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from .views import UploadMealView, MealDetailView, MealListView, meal_liked, \
     meal_disliked, MealListViewTopRated, MealListViewByUser, MealListMyMeals, \
-    follow
+    follow, unfollow
 
 
 urlpatterns = [
