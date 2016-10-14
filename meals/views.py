@@ -2,10 +2,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from .models import Meal, Rating, RatingManager, Comment
 from members.models import Member
+from django.forms import ModelForm
 
 
 def get_meals_user_liked(username):
@@ -40,10 +41,28 @@ class UploadMealView(CreateView):
         form.instance.member = self.request.user
         return super(UploadMealView, self).form_valid(form)
 
+class CreateCommentForm(ModelForm):
+    """Form for commenting."""
+    class Meta(object):
+        model = Comment
+        fields = ['message']
 
-class MealDetailView(DetailView):
+
+class MealDetailView(DetailView, CreateView):
+    """View for individual meals."""
     template_name = 'meals/meal_detail.html'
     model = Meal
+    form_class = CreateCommentForm
+
+    def get_success_url(self):
+        """Manaul success url.""" 
+        url = reverse('meals', kwargs=self.kwargs)
+
+    def form_valid(self, form):
+        """Attach the user to the form."""
+        form.instance.user = self.request.user
+        form.instance.meal_id = self.request.path.split('/')[-1]
+        return super(MealDetailView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context_data = super(MealDetailView, self).get_context_data(**kwargs)
