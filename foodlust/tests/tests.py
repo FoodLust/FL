@@ -112,4 +112,19 @@ class HomeViewTestCase(TestCase):
         self.assertContains(logged_in_response, expected)
 
 
+class AboutViewTest(TestCase):
+    '''TAbout page should have our names on it'''
+    def setUp(self):
+        """Setup for About View."""
+        self.response = self.client.get(reverse('about'))
+
+    def test_about_view_status_code(self):
+        '''Test to see if about page has a valid response code.'''
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_about_page_has_names(self):
+        '''Test to see if the homepage has register button.'''
+        names = [b'James Canning', b'Zach Rickert', b'Mike Harrison', 'Jeff Torres']
+        for name in names:
+            self.assertContains(self.response, name)
 
