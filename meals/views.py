@@ -60,12 +60,9 @@ class MealListView(ListView):
     def get_context_data(self, **kwargs):
         context_data = super(MealListView, self).get_context_data(**kwargs)
         context_data['heading'] = 'Newest meals'
-<<<<<<< HEAD
-=======
         username = self.request.user.username
         context_data['meals_user_liked'] = get_meals_user_liked(username)
         context_data['meals_user_disliked'] = get_meals_user_disliked(username)
->>>>>>> dev
         return context_data
 
 
