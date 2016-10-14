@@ -26,12 +26,19 @@ def get_meals_user_disliked(username):
     return meals_user_disliked
 
 
-def get_people_followed(member):
+def get_people_followed(user_pk):
     followed = []
-    # members_followed = Member.objects.filter(user_id=member.following.user_id)
-    for member in member.following.values():
-        followed.append(member.username)
+    member = Member.objects.filter(pk=user_pk)
+    followed_set = member[0].following.values()
+    for mem in followed_set:
+        followed.append(user_pk_to_username(mem['user_id']))
+    # import pdb; pdb.set_trace()
     return followed
+
+
+def user_pk_to_username(user_pk):
+    username = Member.objects.filter(pk=user_pk)[0].user.username
+    return username
 
 
 @method_decorator(login_required, name='dispatch')
@@ -111,7 +118,7 @@ class MealListViewByUser(ListView):
     paginate_by = 24
 
     def get_queryset(self, **kwargs):
-        """Get meals by a user.""" 
+        """Get meals by a user."""
         username = self.request.path.split('/')[2]
         query = Meal.objects.filter(member__username=username)
         return query
@@ -122,8 +129,11 @@ class MealListViewByUser(ListView):
         meals_by_username = self.request.path.split('/')[2]
         context_data['heading'] = 'Meals by {}'.format(meals_by_username)
         context_data['to_follow'] = meals_by_username
-        context_data['followed'] = get_people_followed(self.request.user.member)
         username = self.request.user.username
+
+        user_pk = self.request.user.pk
+        context_data['followed'] = get_people_followed(user_pk)
+
         context_data['meals_user_liked'] = get_meals_user_liked(username)
         context_data['meals_user_disliked'] = get_meals_user_disliked(username)
         return context_data
