@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
-from .models import Meal, Rating, RatingManager
+from .models import Meal, Rating, RatingManager, Comment
 from members.models import Member
 
 
@@ -44,12 +44,16 @@ class UploadMealView(CreateView):
 class MealDetailView(DetailView):
     template_name = 'meals/meal_detail.html'
     model = Meal
+    # import pdb;pdb.set_trace()
 
     def get_context_data(self, **kwargs):
         context_data = super(MealDetailView, self).get_context_data(**kwargs)
         username = self.request.user.username
-        user_rating = Rating.objects.filter(member__username=username, meal=self.object).first
+        user_rating = Rating.objects.filter(member__username=username, meal=self.object).first()
         context_data['user_rating'] = user_rating
+
+        qs = Comment.objects.filter(meal_id=context_data['meal'].id)
+        context_data['comments'] = qs
         return context_data
 
 

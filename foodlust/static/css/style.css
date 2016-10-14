@@ -56,6 +56,10 @@ h1 {
     color: #373a3c!important;
 }
 
+.bold_profile {
+    font-weight: bold;
+}
+
 .navbar-bottom {
     position: absolute;
     bottom: 0;
