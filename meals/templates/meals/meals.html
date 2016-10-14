@@ -6,7 +6,6 @@
     <h2>No meals to display</h2>
 {% endif %}
 
-
 {% if to_follow and request.user.username != to_follow %}
     <a class="btn btn-default" href ="{% url 'follow_user' to_follow %}">Follow {{to_follow}}</a>
 {% endif %}
@@ -22,19 +21,23 @@
                 <div class="view hm-zoom">
                   <a href="{% url 'meal' pk=meal.pk%}"><img class="meal-img-list" src="{{ meal.photo.url }}"></a>
                 </div>
-                <div class="container">
-                  <p>Member: <a href="{% url 'meals_by_user' username=meal.member.username %}"> {{ meal.member.username }}</a></p>
-                  <p>Upload date: {{ meal.date_created|date:'d M Y' }}</p>
-                  {% if meal.percent >= 0 %}
-                  <p id="rating">Rating: {{ meal.percent }}%</p>
-                  {% else %}
-                  <p>Not yet rated</p>
-                  {% endif %}
-                </div>
-                <div class="container">
-                  <a href="{{ object.pk }}/liked/" id="like" class="pull-xs-left">Like <i class="fa fa-lg fa-thumbs-o-up pull-xs-left"></i></a>
-                  <a class="pull-xs-right" href="{{ object.pk }}/disliked/" id="dislike">Dislike <i class="fa fa-lg fa-thumbs-o-down pull-xs-right"></i></a>
-                </div>
+                <p>Member: <a href="{% url 'meals_by_user' username=meal.member.username %}"> {{ meal.member.username }}</a></p>
+                <p>Upload date: {{ meal.date_created|date:'d M Y' }}</p>
+                {% if meal.percent >= 0 %}
+                    <p>Rating: {{ meal.percent }}%</p>
+                {% else %}
+                    <p>Not yet rated</p>
+                {% endif %}
+
+                {% if meal in meals_user_liked %}
+                    <p><span style="color:grey"> Like <i class="fa fa-lg fa-thumbs-o-up"></i></span>
+                    <a class="pull-xs-right" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                {% elif meal in meals_user_disliked %}
+                    <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                    <span style="color:grey" class="pull-xs-right">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></span></p>
+                {% else %}
+                    <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="pull-xs-right" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                {% endif %}
             </div>
         </div>
         {% if forloop.counter|divisibleby:3 and not forloop.last %}
