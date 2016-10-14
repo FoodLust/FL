@@ -161,13 +161,15 @@ def meal_disliked(request, meal_pk):
 
     try:
         rating = Rating.objects.get(member=member, meal=meal)
+        r_percent = meal.percent()
     except ObjectDoesNotExist:
         Rating.objects.create_rating(member, meal, like)
-        return redirect('meals')
+        r_percent = meal.percent()
 
     rating.like = like
     rating.save()
-    return redirect(request.META['HTTP_REFERER'])
+    r_percent = meal.percent()
+    return HttpResponse(r_percent)
 
 
 @login_required
