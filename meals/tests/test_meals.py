@@ -71,7 +71,9 @@ class MealUploadTestCase(TestCase):
         self.assertEquals(self.response.status_code, 200)
 
 class MealViewTest(TestCase):
+    """Testcase for Meal View."""
     def setUp(self):
+        """Setup for Meal view."""
         self.user = User(username='mike')
         self.user.save()
         self.meal = MealFactory()
@@ -85,15 +87,15 @@ class MealViewTest(TestCase):
     def test_status_code(self):
         """Test status code for meal detail view."""
         self.assertEqual(self.response.status_code, 200)
+
+    def test_meal_detail_view_template(self):
+        """Test template of meal detail view."""
+        self.assertContains(self.response, '<p>Comments:</p>')
+
+    def test_meal_view_has_meal_title(self):
+        """Test view has meal and title."""
+        self.assertContains(self.response, self.meal.title)
     
-
-
-
-    # def test_correct_template(self):
-    #     '''assert view is rendered with our templates'''
-    #     for template_name in ['foodlust/base.html', 'meals/meal.html']:
-    #         self.assertTemplateUsed(self.response, template_name, count=1)
-
 
 class CommentTestCase(TestCase):
     """Test module for the comments model."""
