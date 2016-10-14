@@ -19,15 +19,15 @@
     <div class ='col-md-4'>
         <h2>Following</h2>
         {% for member in follows %}
-        <h3>{{ member }}</h3>
+        <h4>{{ member }}</h4>
         <a href="{% url 'meals_by_user' username=member %}">{{ member }}'s meals</a><br>
         <a href="{% url 'stop_follow_user' usertostopfollow=member %}">Unfollow</a> 
         {% endfor %}
         <p>
         <h2>Followers</h2>
         {% for member in followers %}
-        <a href="{% url 'meals_by_user' username=member %}">{{ member }}</a></br>
-            
+        <h4>{{ member }}</h4>
+        <a href="{% url 'meals_by_user' username=member %}">{{ member }}'s meals</a><br>        
         {% endfor %}
     </div>
 
