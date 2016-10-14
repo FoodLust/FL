@@ -45,6 +45,12 @@ urlpatterns = [
         name='follow_user'
         ),
 
+
+    url(r'^unfollow/(?P<usertostopfollow>[A-Za-z0-9-@._+]*)/$',
+        unfollow,
+        name='stop_follow_user'
+        ),
+
     # This should go last becasue it has an inclusive regular expression
     url(r'^(?P<username>[A-Za-z0-9-@._+]*)/$',
         MealListViewByUser.as_view(),

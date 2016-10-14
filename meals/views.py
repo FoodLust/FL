@@ -136,3 +136,13 @@ def follow(request, usertofollow):
     user.save()
     return redirect('meals_by_user', username=usertofollow)
 
+
+@login_required
+def unfollow(request, usertostopfollow):
+    stop_follow = Member.objects.get(user__username=userstopfollow)
+    user = Member.objects.get(user=request.user)
+    # import pdb; pdb.set_trace()
+    user.following.remove(stop_follow)
+    user.save()
+    return redirect('meals_by_user', username=usertostopfollow)
+
