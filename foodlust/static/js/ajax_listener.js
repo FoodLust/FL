@@ -1,7 +1,7 @@
 $('.selector').on('click', '.liked-blue', function(e) {
   e.preventDefault();
   var id = e.target.href.split('meals')[1].split('/')[1];
-  $.get('http://localhost:8000/meals/' + id + '/liked').done(function(data){
+  $.get('/meals/' + id + '/liked').done(function(data){
     $('.liked-blue').removeAttr('href');
     $('.liked-blue').addClass('liked-gray');
     $('.liked-blue').removeClass('liked-blue');
@@ -17,7 +17,7 @@ $('.selector').on('click', '.liked-blue', function(e) {
 $('.selector').on('click', '.disliked-gray', function(e) {
   e.preventDefault();
   var id = e.target.href.split('meals')[1].split('/')[1];
-  $.get('http://localhost:8000/meals/' + id + '/disliked').done(function(data) {
+  $.get('/meals/' + id + '/disliked').done(function(data) {
         $('.disliked-blue').removeAttr('href');
         $('.disliked-blue').addClass('liked-gray');
         $('.disliked-blue').removeClass('liked-blue');
