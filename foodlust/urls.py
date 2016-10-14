@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^about/', about, name='about'),
     url(r'^accounts/profile/', home_redirect),
     url(r'^member/$', member_view, name='member'),
-    url(r'^member/edit$', edit_member_view, name='member_edit'),
+    url(r'^member/edit$', edit_member_view, name='member_edit')
 ]
 
 

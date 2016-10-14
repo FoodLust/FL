@@ -1,4 +1,5 @@
 {% extends 'foodlust/base.html' %}
+{% load static %}
 {% block body %}
 <h1>{{ heading }}</h1>
 {% if not object_list %}
@@ -27,21 +28,26 @@
                 <p>Member: <a href="{% url 'meals_by_user' username=meal.member.username %}"> {{ meal.member.username }}</a></p>
                 <p>Upload date: {{ meal.date_created|date:'d M Y' }}</p>
                 {% if meal.percent >= 0 %}
-                    <p>Rating: {{ meal.percent }}%</p>
+                    <p class="rating">Rating: <span class="{{ meal.pk }}">{{ meal.percent }}</span>%</p>
                 {% else %}
                     <p>Not yet rated</p>
                 {% endif %}
 
                 {% if meal in meals_user_liked %}
-                    <p><span style="color:grey"> Like <i class="fa fa-lg fa-thumbs-o-up"></i></span>
-                    <a class="pull-xs-right" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                    <p class='selector'>
+                      <a style="color:gray" class="liked-gray"> Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a class="pull-xs-right disliked-blue" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
+                    </p>
                 {% elif meal in meals_user_disliked %}
-                    <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
-                    <span style="color:grey" class="pull-xs-right">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></span></p>
+                    <p class='selector'>
+                      <a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="liked-blue">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a style="color:gray" class="pull-xs-right disliked-gray">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
                 {% else %}
-                    <p><a href="{% url 'meal-liked' meal_pk=meal.pk %}">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a><a class="pull-xs-right" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                    <p class='selector'>
+                      <a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="pull-xs-left liked-open">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a class="pull-xs-right disliked-open" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
+                    </p>
                 {% endif %}
-
             </div>
         </div>
         {% if forloop.counter|divisibleby:3 and not forloop.last %}
@@ -67,4 +73,8 @@
             </span>
         </div>
     {% endif %}
+{% endblock %}
+
+{% block js %}
+<script src="{% static '/js/ajax_listener.js' %}"></script>
 {% endblock %}
