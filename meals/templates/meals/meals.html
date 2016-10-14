@@ -5,7 +5,6 @@
     <h2>No meals to display</h2>
 {% endif %}
 
-
 {% if to_follow and request.user.username != to_follow %}
     <a class="btn btn-default" href ="{% url 'follow_user' to_follow %}">Follow {{to_follow}}</a>
 {% endif %}

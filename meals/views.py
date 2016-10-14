@@ -45,6 +45,13 @@ class MealDetailView(DetailView):
     template_name = 'meals/meal_detail.html'
     model = Meal
 
+    def get_context_data(self, **kwargs):
+        context_data = super(MealDetailView, self).get_context_data(**kwargs)
+        username = self.request.user.username
+        user_rating = Rating.objects.filter(member__username=username, meal=self.object).first
+        context_data['user_rating'] = user_rating
+        return context_data
+
 
 class MealListView(ListView):
     template_name = 'meals/meals.html'
