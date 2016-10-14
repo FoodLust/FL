@@ -81,6 +81,11 @@ class MealViewTest(TestCase):
                            'pk': str(self.meal.pk)}
                            )
         self.client.force_login(self.user)
+        self.comment = Comment()
+        self.comment.meal = self.meal
+        self.comment.user = self.user
+        self.comment.message = "A new message."
+        self.comment.save()
         self.response = self.client.get(self.url)
         
 
@@ -99,6 +104,10 @@ class MealViewTest(TestCase):
     def test_meal_view_has_not_yet_rated(self):
         """Test template contains not yet rated."""
         self.assertContains(self.response, 'Not yet rated')
+
+    def test_meal_view_comment(self):
+        """Test meal view has a comment."""
+        self.assertContains(self.response, "A new message.")
 
 class CommentTestCase(TestCase):
     """Test module for the comments model."""
