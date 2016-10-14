@@ -3,12 +3,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import CreateView, DetailView, UpdateView, ListView
-from .models import Meal, Rating, RatingManager, Comment
+from django.views.generic import CreateView, DetailView, ListView
+from .models import Meal, Rating, Comment
 from members.models import Member
 
 
 def get_meals_user_liked(username):
+    """takes in a username and returns a list of meals that user liked."""
     meals_user_liked = []
     user_liked = Rating.objects.filter(member__username=username, like=True)
     for ratting in user_liked:
@@ -17,6 +18,7 @@ def get_meals_user_liked(username):
 
 
 def get_meals_user_disliked(username):
+    """takes in a username and returns a list of meals that user disliked."""
     meals_user_disliked = []
     user_disliked = Rating.objects.filter(member__username=username, like=False)
     for ratting in user_disliked:
@@ -34,6 +36,7 @@ def get_people_followed(member):
 
 @method_decorator(login_required, name='dispatch')
 class UploadMealView(CreateView):
+    """Alows users to upload meals."""
     template_name = 'meals/uploads_meal.html'
     model = Meal
     fields = ['title', 'photo']
@@ -50,26 +53,30 @@ class UploadMealView(CreateView):
 
 
 class MealDetailView(DetailView):
+    """Shows an indervidual meal with ratings and comments."""
     template_name = 'meals/meal_detail.html'
     model = Meal
 
     def get_context_data(self, **kwargs):
+        """Add the users rating and comments to the context data."""
         context_data = super(MealDetailView, self).get_context_data(**kwargs)
         username = self.request.user.username
         user_rating = Rating.objects.filter(member__username=username, meal=self.object).first()
         context_data['user_rating'] = user_rating
-        qs = Comment.objects.filter(meal_id=context_data['meal'].id)
+        qs = Comment.objects.filter(meal=self.object)
         context_data['comments'] = qs
         return context_data
 
 
 class MealListView(ListView):
+    """A list of meals by revers chronological order."""
     template_name = 'meals/meals.html'
     model = Meal
     ordering = '-date_created'
     paginate_by = 24
 
     def get_context_data(self, **kwargs):
+        """add, heading and list of meals user has liked and disliked."""
         context_data = super(MealListView, self).get_context_data(**kwargs)
         context_data['heading'] = 'Newest meals'
         username = self.request.user.username
@@ -79,11 +86,13 @@ class MealListView(ListView):
 
 
 class MealListViewTopRated(ListView):
+    """A list of meals by rating."""
     template_name = 'meals/meals.html'
     model = Meal
     paginate_by = 24
 
     def get_context_data(self, **kwargs):
+        """Add, heading and list of meals user has liked and disliked."""
         context_data = super(MealListViewTopRated, self).get_context_data(**kwargs)
         sorted_context_data = sorted(context_data['object_list'], key=lambda meal: meal.percent(), reverse=True)
         context_data['object_list'] = sorted_context_data
@@ -95,17 +104,20 @@ class MealListViewTopRated(ListView):
 
 
 class MealListViewByUser(ListView):
+    """A list of the meals of a particular user."""
     template_name = 'meals/meals.html'
     model = Meal
     ordering = '-date_created'
     paginate_by = 24
 
     def get_queryset(self, **kwargs):
+        """Get meals by a user.""" 
         username = self.request.path.split('/')[2]
         query = Meal.objects.filter(member__username=username)
         return query
 
     def get_context_data(self, **kwargs):
+        """Add heading a username and a list of meals the current user has liked or dislikes."""
         context_data = super(MealListViewByUser, self).get_context_data(**kwargs)
         meals_by_username = self.request.path.split('/')[2]
         context_data['heading'] = 'Meals by {}'.format(meals_by_username)
@@ -119,17 +131,20 @@ class MealListViewByUser(ListView):
 
 @method_decorator(login_required, name='dispatch')
 class MealListMyMeals(ListView):
+    """List of meals buy the current user."""
     template_name = 'meals/meals.html'
     model = Meal
     ordering = '-date_created'
     paginate_by = 24
 
     def get_queryset(self, **kwargs):
+        """Get meals by the current user"""
         username = self.request.user.username
         query = Meal.objects.filter(member__username=username)
         return query
 
     def get_context_data(self, **kwargs):
+        """Add heading and a list of meals the current user has liked or dislikes."""
         context_data = super(MealListMyMeals, self).get_context_data(**kwargs)
         context_data['heading'] = 'My meals'
         username = self.request.user.username
@@ -140,6 +155,7 @@ class MealListMyMeals(ListView):
 
 @login_required
 def meal_liked(request, meal_pk):
+    """Likes a meal by the current user."""
     meal_pk = int(meal_pk)
     meal = Meal.objects.get(pk=meal_pk)
     like = True
@@ -158,6 +174,7 @@ def meal_liked(request, meal_pk):
 
 @login_required
 def meal_disliked(request, meal_pk):
+    """Disikes a meal by the current user."""
     meal_pk = int(meal_pk)
     meal = Meal.objects.get(pk=meal_pk)
     like = False
@@ -176,6 +193,7 @@ def meal_disliked(request, meal_pk):
 
 @login_required
 def follow(request, usertofollow):
+    """Follows a user by the current user."""
     to_follow = Member.objects.get(user__username=usertofollow)
     user = Member.objects.get(user=request.user)
     user.following.add(to_follow)
@@ -185,10 +203,9 @@ def follow(request, usertofollow):
 
 @login_required
 def unfollow(request, usertostopfollow):
+    """Unfollows a user by the current user."""
     stop_follow = Member.objects.get(user__username=usertostopfollow)
     user = Member.objects.get(user=request.user)
-    # import pdb; pdb.set_trace()
     user.following.remove(stop_follow)
     user.save()
     return redirect(request.META['HTTP_REFERER'])
-
