@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from .models import Meal, Rating, RatingManager
 from members.models import Member
+from django.http import HttpResponse
 
 
 @method_decorator(login_required, name='dispatch')
@@ -102,13 +103,16 @@ def meal_liked(request, meal_pk):
 
     try:
         rating = Rating.objects.get(member=member, meal=meal)
+        r_percent = meal.percent()
     except ObjectDoesNotExist:
         Rating.objects.create_rating(member, meal, like)
-        return redirect('meals')
+        r_percent = meal.percent()
+        return HttpResponse(r_percent)
 
     rating.like = like
     rating.save()
-    return redirect('meals')
+    r_percent = meal.percent()
+    return HttpResponse(r_percent)
 
 
 @login_required
@@ -137,4 +141,3 @@ def follow(request, usertofollow):
     user.following.add(to_follow)
     user.save()
     return redirect('meals_by_user', username=usertofollow)
-

@@ -32,6 +32,12 @@ urlpatterns = [
     url(r'^accounts/profile/', home_redirect),
     url(r'^member/$', member_view, name='member'),
     url(r'^member/edit$', edit_member_view, name='member_edit'),
+    # url(r'^password_change/done$', auth_views.password_change_done),
+    # url(r'^password_reset/done$', auth_views.password_reset_done),
+    # url(r'^reset/done/$', auth_views.password_reset_complete),
+    # url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm),
+    # url(r'^password_reset/$', auth_views.password_reset),
+    # url(r'^password_change/$', auth_views.password_change, {'template_name': 'registration/password_change_form.html'}),
 ]
 
 

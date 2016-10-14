@@ -1,4 +1,5 @@
 {% extends 'foodlust/base.html' %}
+{% load static %}
 {% block body %}
 <div class="container">
 <div class="meal-rectangle-detail">
@@ -12,8 +13,19 @@
           <p>Rating: {{ object.percent }}</p>
         </div>
         <div class="container">
-          <a href="{{ object.pk }}/liked/">Like <i class="fa fa-lg fa-thumbs-o-up pull-xs-left"></i></a><a class="pull-xs-right" href="{{ object.pk }}/disliked">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+          <form class="" action="/create_post/" method="post">
+            <input type="submit" name="submit" value="submit" style="display: none">
+              <a href="{{ object.pk }}/liked/">Like <i class="fa fa-lg fa-thumbs-o-up pull-xs-left"></i></a>
+            </input>
+            <input type="submit" name="submit" value="submit" style="display: none">
+              <a class="pull-xs-right" href="{{ object.pk }}/disliked">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
+            </input>
+          </form>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static '/js/main.js' %}"></script>
 {% endblock %}
