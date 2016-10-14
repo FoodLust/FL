@@ -89,9 +89,9 @@ class TestMemberView(TestCase):
     def test_meals_on_member_page(self):
         """Test meals show up on member page."""
         self.meal = MealFactory()
-        self.client.force_login(self.user)
+        self.client.force_login(self.meal.member)
         response = self.client.get(reverse('member'))
-        self.assertContains(response, self.meal.id)
+        self.assertContains(response, self.meal.title)
 
 class TestEditMemberView(TestCase):
     """Testcase for edit member info."""

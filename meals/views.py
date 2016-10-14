@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView
 from .models import Meal, Rating, Comment
 from members.models import Member
+from django.forms import ModelForm
 
 
 def get_meals_user_liked(username):
@@ -58,10 +59,29 @@ class UploadMealView(CreateView):
         return super(UploadMealView, self).form_valid(form)
 
 
-class MealDetailView(DetailView):
-    """Shows an indervidual meal with ratings and comments."""
+class CreateCommentForm(ModelForm):
+    """Form for commenting."""
+    class Meta(object):
+        model = Comment
+        fields = ['message']
+
+
+class MealDetailView(DetailView, CreateView):
+    """View for individual meals."""
     template_name = 'meals/meal_detail.html'
     model = Meal
+    form_class = CreateCommentForm
+
+    def get_success_url(self):
+        """Manaul success url."""
+        url = reverse('meal', kwargs=self.kwargs)
+        return url
+
+    def form_valid(self, form):
+        """Attach the user to the form."""
+        form.instance.user = self.request.user
+        form.instance.meal_id = self.request.path.split('/')[-1]
+        return super(MealDetailView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         """Add the users rating and comments to the context data."""
