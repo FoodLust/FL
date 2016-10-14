@@ -56,7 +56,9 @@ class MealDetailView(DetailView, CreateView):
 
     def get_success_url(self):
         """Manaul success url.""" 
-        url = reverse('meals', kwargs=self.kwargs)
+        url = reverse('meal', kwargs=self.kwargs)
+        return url
+
 
     def form_valid(self, form):
         """Attach the user to the form."""
