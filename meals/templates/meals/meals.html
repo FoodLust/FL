@@ -1,0 +1,80 @@
+{% extends 'foodlust/base.html' %}
+{% load static %}
+{% block body %}
+<h1>{{ heading }}</h1>
+{% if not object_list %}
+    <h2>No meals to display</h2>
+{% endif %}
+
+    {% if to_follow and to_follow != request.user.username %}
+        {% if to_follow in followed %}
+            <a class="btn btn-default" href ="{% url 'stop_follow_user' to_follow %}">Unfollow {{to_follow}}</a>
+        {% else %}
+            <a class="btn btn-default" href ="{% url 'follow_user' to_follow %}">Follow {{to_follow}}</a>
+        {% endif %}
+    {% endif %}
+
+{% for meal in object_list %}
+    {% if forloop.counter0|divisibleby:3 %}
+        <div class="row">
+    {% endif %}
+    <div class='col-md-4'>
+        <div class="meal-rectangle-list">
+            <div class="container hoverable">
+                <h2 class="meal-title-list"><a href="{% url 'meal' pk=meal.pk%}">{{ meal.title }}</a></h2>
+                <div class="view hm-zoom">
+                  <a href="{% url 'meal' pk=meal.pk%}"><img class="meal-img-list" src="{{ meal.photo.url }}"></a>
+                </div>
+                <p>Member: <a href="{% url 'meals_by_user' username=meal.member.username %}"> {{ meal.member.username }}</a></p>
+                <p>Upload date: {{ meal.date_created|date:'d M Y' }}</p>
+                {% if meal.percent >= 0 %}
+                    <p class="rating">Rating: <span class="{{ meal.pk }}">{{ meal.percent }}</span>%</p>
+                {% else %}
+                    <p>Not yet rated</p>
+                {% endif %}
+
+                {% if meal in meals_user_liked %}
+                    <p class='selector'>
+                      <a style="color:gray" class="liked-gray"> Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a class="pull-xs-right disliked-blue" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
+                    </p>
+                {% elif meal in meals_user_disliked %}
+                    <p class='selector'>
+                      <a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="liked-blue">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a style="color:gray" class="pull-xs-right disliked-gray">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a></p>
+                {% else %}
+                    <p class='selector'>
+                      <a href="{% url 'meal-liked' meal_pk=meal.pk %}" class="pull-xs-left liked-blue">Like <i class="fa fa-lg fa-thumbs-o-up"></i></a>
+                      <a class="pull-xs-right disliked-blue" href="{% url 'meal-disliked' meal_pk=meal.pk %}">Dislike <i class="fa fa-lg fa-thumbs-o-down"></i></a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+            </div>
+        {% endif %}
+        {% if forloop.last %}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+<script src="{% static '/js/ajax_listener.js' %}"></script>
+{% endblock %}

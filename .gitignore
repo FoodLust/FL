@@ -87,3 +87,16 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Media file
+media/
+
+# User added ignores
+bin/
+pip-selfcheck.json
+pyvenv.cfg
+
+
+# Personal
+include/
+lib64

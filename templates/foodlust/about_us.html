@@ -1,0 +1,48 @@
+{% extends 'foodlust/base.html' %}
+
+{% load static %}
+
+{% block component_css %}
+<link rel="stylesheet" href="{% static '' %}">
+{% endblock %}
+
+{% block body %}
+<div class="col-md-12">
+    <div class="media">
+        <a class="media-left waves-light">
+            <img class="img-rounded" src="{% static 'img/james_spirit_food.jpg' %}" alt="Generic placeholder image">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">James Canning</h4>
+            <p>James is a full stack developer and bitcoin fanatic. He founded <a href="https://www.bitedge.co/" target="_blank">Bitedge</a> in 2013.</p>
+        </div>
+    </div>
+    <div class="media">
+        <a class="media-left waves-light">
+            <img class="img-rounded" src="{% static 'img/zach_spirit_food.jpg' %}" alt="Generic placeholder image">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">Zach Rickert</h4>
+            <p>Zach Rickert is a Python developer in the Seattle Area. He has a strong background in mathematics, informal science education and customer service.</p>
+        </div>
+    </div>
+    <div class="media">
+        <a class="media-left waves-light">
+            <img class="img-rounded" src="{% static 'img/mike_spirit_food.jpg' %}" alt="Generic placeholder image">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">Mike Harrison</h4>
+            <p>I'm a Python developer and proud of it. I eat chinese food mostly because I like the box that it comes in. I have a weakness for morning coffee at Street Bean and Test Driven Development. You can typically find me kickin it at Code Fellows with my Hacker Bros. I think I can grow a mustache.</p>
+        </div>
+    </div>
+    <div class="media">
+        <a class="media-left waves-light">
+            <img class="img-rounded" src="{% static 'img/jeff_spirit_food.jpg' %}" alt="Generic placeholder image">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">Jeff Torres</h4>
+            <p>Jeff has no idea what day it is at this point. He has no idea how he even got here today. He can still write a wicked ansible script though and isn't to shabby with Python. Unlike Mike, he harbors no foolish moustache dreams</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

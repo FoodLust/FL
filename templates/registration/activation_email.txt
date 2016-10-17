@@ -1,0 +1,7 @@
+Register with food lust
+--------------------------------------
+
+Activate your new account:
+http://{{site}}/accounts/activate/{{activation_key}}/
+
+Thanks and happy eating :)
